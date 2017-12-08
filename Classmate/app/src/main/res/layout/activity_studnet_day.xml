@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.com.classmate.ui.activities.students.StudentDayActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_ten_dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_ten_dp"
+            android:orientation="horizontal">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:id="@+id/customTextViewMedium"
+                style="@style/wrap_wrap"
+                android:text="Good \nMorning"
+                android:textColor="@color/app_black_buttons_bg_color" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                style="@style/wrap_wrap"
+                android:layout_marginLeft="@dimen/app_twenty_dp"
+                android:text="26* \nKakinada, Andhara pradesh"
+                android:textColor="@color/app_black_buttons_bg_color" />
+        </LinearLayout>
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:id="@+id/customTextViewRegular"
+            style="@style/wrap_wrap"
+            android:layout_marginTop="@dimen/app_thirty_dp"
+            android:text="You'\ve got a lot to do."
+            android:textColor="@color/app_black_buttons_bg_color" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:id="@+id/customTextViewRegular2"
+            style="@style/wrap_wrap"
+            android:layout_marginTop="@dimen/app_ten_dp"
+            android:text="Let'\s see what we have today.."
+            android:textColor="@color/app_black_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_five_sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:layout_marginTop="@dimen/app_twenty_dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_white_buttons_bg_color">
+
+                    <LinearLayout
+                        android:id="@+id/ll_classes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/app_twenty_dp"
+                            android:text="Classes"
+                            android:textColor="@color/app_black_buttons_bg_color" />
+
+                        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/app_ten_dp"
+                            android:text="1.5 hour each" />
+
+                        <org.com.classmate.utils.customfonts.CustomTextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/app_thirty_dp"
+                            android:layout_marginTop="@dimen/app_twenty_dp"
+                            android:text="5"
+                            android:textColor="@color/app_black_buttons_bg_color"
+                            android:textSize="@dimen/app_thirty_five_sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/app_fourty_dp"
+                            android:background="@color/view_bg_blue">
+
+                            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="View"
+                                android:textColor="@color/view_text_color" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/app_fifteen_dp"
+                    android:background="@color/app_white_buttons_bg_color">
+
+                    <LinearLayout
+                        android:id="@+id/ll_assignments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/app_twenty_dp"
+                            android:text="Assignments"
+                            android:textColor="@color/app_black_buttons_bg_color" />
+
+                        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/app_ten_dp"
+                            android:text="50% avg" />
+
+                        <org.com.classmate.utils.customfonts.CustomTextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/app_thirty_dp"
+                            android:layout_marginTop="@dimen/app_twenty_dp"
+                            android:text="2"
+                            android:textColor="@color/app_black_buttons_bg_color"
+                            android:textSize="@dimen/app_thirty_five_sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/app_fourty_dp"
+                            android:background="@color/view_bg_blue">
+
+                            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="View"
+                                android:textColor="@color/view_text_color" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_performance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_ten_dp"
+            android:layout_marginTop="@dimen/app_twenty_dp"
+            android:orientation="vertical">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewBold
+                style="@style/wrap_wrap"
+                android:text="Performance"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                style="@style/wrap_wrap"
+                android:text="Summary of your subject name"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

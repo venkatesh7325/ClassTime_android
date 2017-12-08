@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_white_buttons_bg_color"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+            style="@style/match_wrap"
+            android:layout_marginTop="@dimen/app_ten_dp"
+            android:text="@string/take_test"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/app_twenty_two_sp" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+            style="@style/match_wrap"
+            android:layout_marginTop="@dimen/app_ten_dp"
+            android:text="@string/all_your_test"
+            android:textAlignment="center"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/app_fourteen_sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/app_ten_dp"
+    android:orientation="vertical"
+    tools:context="org.com.classmate.ui.fragments.admin.CollegeDepartmentFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <org.com.classmate.utils.customfonts.CustomTextViewBold
+        android:id="@+id/tv_dept_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/view_bg_blue"
+        android:gravity="center"
+        android:padding="@dimen/app_ten_dp"
+        android:text="CSE"
+        android:textColor="@color/app_black_buttons_bg_color"
+        android:textSize="@dimen/app_twenty_sp" />
+
+
+</LinearLayout>

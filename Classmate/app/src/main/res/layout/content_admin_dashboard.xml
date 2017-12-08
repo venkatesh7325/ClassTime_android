@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_gray"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="org.com.classmate.ui.activities.teacher.TeachersDashboardActivity"
+    tools:showIn="@layout/activity_teacher_dashboard">
+
+    <LinearLayout
+        style="@style/match_wrap"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="ProfileImage"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            app:layout_constraintRight_toLeftOf="@+id/txtAdminName"
+            app:srcCompat="@drawable/user_1" />
+
+        <LinearLayout
+            style="@style/match_match"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/txtAdminName"
+                style="@style/MyTextViewStyleBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Profile Picture"
+                android:text="Name"
+                android:textColor="@android:color/white" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/txtDesignation"
+                style="@style/MyTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:contentDescription="Profile Picture"
+                android:text="Designation"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/txtDCode"
+                style="@style/MyTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Code"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/match_wrap"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:id="@+id/ll_Tim_table"
+                style="@style/match_wrap"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time Table" />
+
+                <TextView
+                    android:id="@+id/txt_classes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:id="@+id/ll_classes"
+                style="@style/match_match"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Classes" />
+
+                <TextView
+                    android:id="@+id/txt_lessons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:id="@+id/ll_task_creation"
+                style="@style/match_match"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assignment" />
+
+                <TextView
+                    android:id="@+id/txt_Rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.8" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:id="@+id/ll_attendance"
+                style="@style/match_match"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attendence" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!-- <android.support.v7.widget.CardView
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:layout_marginRight="5dp"
+             app:cardCornerRadius="2dp"
+             android:background="@android:color/white"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:id="@+id/TaskAssign"
+                 android:gravity="center"
+                 style="@style/match_match"
+                 android:orientation="vertical"
+                 >
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Assign"/>
+
+             </LinearLayout>
+         </android.support.v7.widget.CardView>-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/match_match"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/MyTextViewStyle"
+            android:layout_marginRight="10dp"
+            android:text="About:" />
+
+        <TextView
+            style="@style/MyTextViewStyle"
+            android:text="@string/all_your_classes_org_in_way" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.github.lzyzsd.circleprogress.DonutProgress
+        android:id="@+id/donut_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/app_twenty_dp"
+        custom:donut_progress="50.4" />
+
+    <org.com.classmate.utils.customfonts.CustomTextViewLight
+        android:id="@+id/customTextViewLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="YOUR AVERAGE" />
+
+    <org.com.classmate.utils.customfonts.CustomTextViewBold
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/app_ten_dp"
+        android:text="GOOD"
+        android:textColor="@color/app_black_buttons_bg_color"
+        android:textSize="@dimen/app_twenty_five_sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_ten_dp"
+        android:background="@color/light_gray"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/app_twenty_dp"
+        android:paddingTop="@dimen/app_twenty_dp"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8.8"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_thirty_sp"
+                android:textStyle="bold" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ACADEMIC"
+                android:textColor="@color/dash_board_gray" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/app_white_buttons_bg_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewBold
+                android:id="@+id/customTextViewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.5"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_thirty_sp"
+                android:textStyle="bold" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SOFT SKILLS"
+                android:textColor="@color/dash_board_gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewBold
+                android:id="@+id/customTextViewBold2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9.0"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_thirty_sp"
+                android:textStyle="bold" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewLight
+                android:id="@+id/customTextViewLight2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HARD SKILLS"
+                android:textColor="@color/dash_board_gray" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/app_white_buttons_bg_color" />
+
+    </LinearLayout>
+
+</LinearLayout>

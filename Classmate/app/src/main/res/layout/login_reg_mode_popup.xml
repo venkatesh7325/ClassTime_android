@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_five_dp"
+        android:background="@color/dash_board_gray"
+        android:orientation="horizontal"
+        android:padding="@dimen/app_eight_dp">
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:id="@+id/tv_popup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/app_ten_dp"
+            android:text="Choose your Role"
+            android:textColor="@color/app_black_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_sp" />
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_login_modes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_twenty_dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rb_admin"
+            style="@style/wrap_wrap"
+            android:text="@string/admin" />
+
+        <RadioButton
+            android:id="@+id/rb_hod"
+            style="@style/wrap_wrap"
+            android:text="@string/hod" />
+
+        <RadioButton
+            android:id="@+id/rb_faculty"
+            style="@style/wrap_wrap"
+            android:text="@string/faculty" />
+
+        <RadioButton
+            android:id="@+id/rb_student"
+            style="@style/wrap_wrap"
+            android:text="@string/student" />
+    </RadioGroup>
+
+    <LinearLayout
+        style="@style/match_wrap"
+        android:layout_marginRight="@dimen/app_twenty_dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            style="@style/wrap_wrap"
+            android:padding="@dimen/app_ten_dp"
+            android:text="CANCEL"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/okay"
+            style="@style/wrap_wrap"
+            android:layout_marginRight="@dimen/app_twenty_dp"
+            android:padding="@dimen/app_ten_dp"
+            android:layout_marginBottom="@dimen/app_ten_dp"
+            android:text="OK"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+
+    </LinearLayout>
+</LinearLayout>

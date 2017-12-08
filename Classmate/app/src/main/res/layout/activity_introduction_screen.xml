@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_white_buttons_bg_color"
+    android:weightSum="1">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".6"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/app_white_buttons_bg_color"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:padding="@dimen/app_ten_dp"
+                android:visibility="visible"
+                app:centered="true"
+                app:fillColor="@color/colorPrimary"
+                app:pageColor="@color/app_white_buttons_bg_color"
+                app:snap="false"
+                app:strokeColor="@color/colorPrimary" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_signup"
+            style="@style/wrap_wrap"
+            android:background="@color/blue"
+            android:paddingLeft="@dimen/app_thirty_dp"
+            android:paddingRight="@dimen/app_thirty_dp"
+            android:text="@string/singn_up"
+            android:textColor="@color/app_white_buttons_bg_color" />
+
+        <LinearLayout
+            android:id="@+id/btn_signin"
+            style="@style/wrap_wrap"
+            android:padding="@dimen/app_fifteen_dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                style="@style/match_wrap"
+                android:text="@string/already_member"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="@dimen/app_sixteen_sp" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                style="@style/match_wrap"
+                android:text="@string/sign_in"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/app_sixteen_sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

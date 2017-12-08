@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+
+    <include
+        layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <include layout="@layout/layout_profile" />
+
+                <Spinner
+                    android:id="@+id/spin_univ"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="@dimen/app_five_dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="@dimen/app_ten_dp"
+                    android:background="@color/dash_board_gray" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_cname"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="College Name"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_ccode"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="College Code"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_select_branch"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Select your college branchs"
+                    android:inputType="none"
+                    android:cursorVisible="false"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/app_black_buttons_bg_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_mobile"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Mobile"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_email"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_password"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_cnf_password"
+                    style="@style/match_wrap"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <!--<include
+                    android:id="@+id/branchesview"
+                    layout="@layout/layout_addfields"></include>
+
+                <LinearLayout
+                    android:id="@+id/branches"
+                    style="@style/match_wrap"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/viewContactNumbers"
+                    layout="@layout/layout_addfields"></include>
+
+                <LinearLayout
+                    android:id="@+id/layout_number"
+                    style="@style/match_wrap"
+                    android:orientation="vertical">
+
+                </LinearLayout>-->
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="top"
+                    android:hint="Address"
+                    android:inputType="textPostalAddress|textCapSentences"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_city"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="City"
+                    android:inputType="textPostalAddress|textCapSentences"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+
+                <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                    android:id="@+id/edt_pincode"
+                    style="@style/match_wrap"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Pincode"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/app_black_buttons_bg_color"
+                    android:textColorHint="@color/font_color" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

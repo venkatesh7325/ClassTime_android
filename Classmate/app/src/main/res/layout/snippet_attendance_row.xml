@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/app_five_dp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/student_image"
+        android:layout_width="@dimen/app_seventy_dp"
+        android:layout_height="@dimen/app_seventy_dp"
+        android:src="@drawable/boy_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/app_ten_dp"
+        android:orientation="vertical">
+
+        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+            android:id="@+id/tv_student_rollnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/app_five_dp"
+            android:text="10HN12009"
+            android:textColor="@color/app_black_buttons_bg_color"
+            android:textSize="@dimen/app_eighteen_sp" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:id="@+id/tv_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Venkatesh"
+            android:textColor="@color/app_black_buttons_bg_color"
+            android:textSize="@dimen/app_sixteen_sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_student_attendance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RadioButton
+                android:id="@+id/rb_student_present"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Present" />
+
+            <RadioButton
+                android:id="@+id/rv_student_absent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Absent" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>

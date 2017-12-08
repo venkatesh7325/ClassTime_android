@@ -1,0 +1,189 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.com.classmate.ui.fragments.admin.CollegeInformationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dash_board_gray"
+            android:padding="@dimen/app_ten_dp">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/tv_clz_verification_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PCEE"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_twenty_sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dash_board_gray"
+            android:padding="@dimen/app_ten_dp">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/tv_clz_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adarsh College of Engineering(ACEE)"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_twenty_sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/app_five_dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_five_dp"
+                android:layout_marginRight="@dimen/app_five_dp"
+                android:src="@drawable/location" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:id="@+id/tv_clz_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:text="Sarpavaram,Kakinada,560043"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/app_five_dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_five_dp"
+                android:layout_marginRight="@dimen/app_five_dp"
+                android:src="@drawable/cal" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:id="@+id/tv_clz_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:text="2004"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/app_five_dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_five_dp"
+                android:layout_marginRight="@dimen/app_five_dp"
+                android:src="@drawable/globe" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:id="@+id/tv_clz_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:text="www.acee.in.org"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/app_five_dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_five_dp"
+                android:layout_marginRight="@dimen/app_five_dp"
+                android:contentDescription="message"
+                android:src="@drawable/message" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:id="@+id/tv_clz_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:text="acee@gmail.com"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/app_five_dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_five_dp"
+                android:layout_marginRight="@dimen/app_five_dp"
+                android:contentDescription="message"
+                android:src="@drawable/phone" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:id="@+id/tv_clz_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:text="9980454920"
+                android:textColor="@color/app_black_buttons_bg_color"
+                android:textSize="@dimen/app_eighteen_sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/app_ten_dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_subject_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_two_hundred_dp"
+        android:background="@color/app_green_color">
+
+        <org.com.classmate.utils.customfonts.CustomTextViewBold
+            android:id="@+id/tv_subjectsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="English"
+            android:textColor="@color/app_white_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_five_sp" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:id="@+id/tv_subjectBranch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_ten_dp"
+            android:text="Branch : CSE"
+            android:textColor="@color/app_white_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_four_sp" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:id="@+id/tv_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/app_ten_dp"
+            android:text="2nd year"
+            android:textColor="@color/app_white_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_four_sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_classes"
+            android:icon="@drawable/book"
+            android:title="Classes" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/list"
+            android:title="Attendance" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/star"
+            android:title="Score" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/comment"
+            android:title="Discussion" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/calender"
+            android:title="Events" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/configure"
+            android:title="Settings" />
+    </group>
+
+   <!-- <item android:title="Communicate">
+        <menu>
+
+        </menu>
+    </item>-->
+
+</menu>

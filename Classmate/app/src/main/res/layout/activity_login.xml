@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/app_thirty_dp"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="org.com.classmate.ui.activities.common.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".7"
+        android:gravity="center">
+
+        <ImageView
+            style="@style/wrap_wrap"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/class_stu" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/app_twenty_dp"
+        android:layout_weight=".3"
+        android:orientation="vertical">
+
+        <org.com.classmate.utils.customfonts.CustomTextViewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/fivedp"
+            android:text="CLASS TIME"
+            android:textColor="@color/app_black_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_five_sp"
+            android:typeface="serif" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/tv_loginWithMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:padding="@dimen/app_eight_dp"
+                android:text="Mobile"
+                android:textAlignment="center" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/fivedp"
+                android:text="OR" />
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:id="@+id/tv_loginWithEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/fivedp"
+                android:layout_weight=".5"
+                android:padding="@dimen/app_eight_dp"
+                android:text="Email"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_login_email"
+            style="@style/match_wrap"
+            android:layout_gravity="center_vertical"
+            android:drawableLeft="@drawable/accounts_icon"
+            android:drawablePadding="@dimen/app_ten_dp"
+            android:drawableTint="@color/colorPrimary"
+            android:hint="Mobile"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:padding="@dimen/app_ten_dp"
+            android:textColorHint="@color/font_color" />
+
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_login_password"
+            style="@style/match_wrap"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/app_ten_dp"
+            android:layout_marginTop="@dimen/fivedp"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:drawablePadding="@dimen/fivedp"
+            android:drawableTint="@color/colorPrimary"
+            android:hint="Password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:padding="@dimen/app_eight_dp"
+            android:textColorHint="@color/font_color" />
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/wrap_wrap"
+            android:layout_gravity="center"
+            android:background="@color/blue"
+            android:text="@string/sign_in"
+            android:textColor="@color/app_white_buttons_bg_color" />
+
+    </LinearLayout>
+
+</LinearLayout>

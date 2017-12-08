@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">Class Time</string>
+
+
+    <!-- Landing screen strings-->
+    <string name="mon">Monday</string>
+    <string name="alpha1">Alpha 16</string>
+    <string name="alpha2">Alpha 17</string>
+    <string name="alpha3">Alpha 18</string>
+    <string name="phy">Physics</string>
+    <string name="f_f1">4&#8211;5 PM</string>
+    <string name="f_f2">5&#8211;6 PM</string>
+    <string name="f_f3">6&#8211;7 PM</string>
+    <string name="all_your_classes_org">All Your Classes Organized</string>
+    <string name="all_your_classes_org_in_way">All Your Classes Organized in a way that you\nnever lose track of one</string>
+    <string name="singn_up">SIGN UP</string>
+    <string name="already_member">Already a Member?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="take_test">Take Test On The Go</string>
+    <string name="all_your_test">All your tests from all your batches are \n available to you wherever you are</string>
+    <string name="analyse_your_performance">Analyse Your Performance</string>
+    <string name="detailed_analysis">Detailed analysis reports for all your tests to \n help you improve your performance</string>
+
+    <string name="txt_prifile_picture"></string>
+
+    <string name="Spiner_college_prompt">Choose a University</string>
+
+    <!-- arrays screen strings-->
+
+    <string-array name="college_arrays">
+        <item>Choose a University </item>
+        <item>JNTU</item>
+        <item>JNTUH</item>
+        <item>JNTUK</item>
+    </string-array>
+
+
+    <string-array name="subjects">
+        <item>Choose a Subjects </item>
+        <item>s1</item>
+        <item>s2</item>
+        <item>s3</item>
+    </string-array>
+    <string name="title_activity_admin">Admin Registration</string>
+    <string name="title_activity_admin_form">AdminFormActivity</string>
+
+    <string name="admin">Admin</string>
+    <string name="hod">HOD</string>
+    <string name="faculty">Teacher</string>
+    <string name="student">Student</string>
+    <string name="login_as">Login as</string>
+
+    <string name="Spiner_dept_prompt">Select Department</string>
+    <string name="Spiner_year_prompt">Select Year</string>
+    <string name="Spiner_semi_prompt">Select Semester</string>
+    <!-- arrays screen strings-->
+
+    <string-array name="Departments_arrays">
+        <item>@string/Spiner_dept_prompt</item>
+        <item>CSE</item>
+        <item>EEE</item>
+        <item>ECE</item>
+        <item>IT</item>
+        <item>MECH</item>
+        <item>CIVIL</item>
+    </string-array>
+
+    <string-array name="years_arrays">
+        <item>@string/Spiner_year_prompt</item>
+        <item>1 Year</item>
+        <item>2nd Year</item>
+        <item>3rd Year</item>
+        <item>4th Year</item>
+    </string-array>
+
+    <string-array name="semi_arrays">
+        <item>@string/Spiner_semi_prompt</item>
+        <item>I</item>
+        <item>II</item>
+    </string-array>
+
+    <string name="title_activity_student_dash_board">Student DashBoard</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_admin_dashboard">AdminDashboardActivity</string>
+    <string name="title_activity_lesson">LessonActivity</string>
+    <string name="title_activity_teachers_time_table">TeachersTimeTableActivity</string>
+    <string name="submit">Submit</string>
+
+    <string name="hint_task_name">Task Name</string>
+    <string name="hint_reward_points">Reward Points</string>
+    <string name="hint_start_date">Start Date</string>
+    <string name="hint_end_date">End Date</string>
+    <string name="hint_start_time">Start Time</string>
+    <string name="hint_end_time">End Time</string>
+    <string name="title_activity_admin_dash_board">Admin DashBoard</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="coming_soon">Coming soon...</string>
+
+</resources>

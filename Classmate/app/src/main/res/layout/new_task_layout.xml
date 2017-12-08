@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/task_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task Details"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/sp_choose_years"
+                style="@style/match_wrap"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corners"
+                android:entries="@array/years_arrays"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+
+            <Spinner
+                android:id="@+id/sp_choose_semi"
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/app_ten_dp"
+                android:background="@drawable/rounded_corners"
+                android:entries="@array/semi_arrays"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+
+
+            <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                android:id="@+id/edt_dept"
+                style="@style/match_wrap"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/app_ten_dp"
+                android:background="@drawable/rounded_corners"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:hint="Select Your Branch"
+                android:padding="@dimen/app_ten_dp"
+                android:textColorHint="@color/font_color" />
+
+            <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                android:id="@+id/edt_subject"
+                style="@style/match_wrap"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/app_ten_dp"
+                android:background="@drawable/rounded_corners"
+                android:cursorVisible="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Select Subjects"
+                android:padding="@dimen/app_ten_dp"
+                android:textColorHint="@color/font_color" />
+
+            <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                android:id="@+id/edt_taskName"
+                style="@style/match_wrap"
+                android:hint="Task Name"
+                android:inputType="text"
+                android:textColorHint="@color/font_color" />
+
+            <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                android:id="@+id/edt_taskDesc"
+                style="@style/match_wrap"
+                android:layout_marginBottom="10dp"
+                android:hint="Task Desc"
+                android:inputType="text"
+                android:textColorHint="@color/font_color" />
+
+            <EditText
+                android:id="@+id/txtStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_corners"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Select Date"
+                android:padding="10dp"
+                android:text="Start Date" />
+
+            <EditText
+                android:id="@+id/txtEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_corners"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Select Date"
+                android:padding="10dp"
+                android:text="End Date" />
+
+
+            <Button
+                android:id="@+id/btn_upload"
+                style="@style/wrap_wrap"
+                android:layout_gravity="end"
+                android:background="@drawable/blue_rounded_corners"
+                android:paddingLeft="@dimen/app_ten_dp"
+                android:paddingRight="@dimen/app_ten_dp"
+                android:text="Upload Documents"
+                android:textColor="@color/app_white_buttons_bg_color"
+                android:textSize="@dimen/app_sixteen_sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_getFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/doc_images"
+                    android:layout_width="@dimen/app_fifty_dp"
+                    android:layout_height="@dimen/app_fifty_dp"
+                    android:src="@drawable/calender_blue" />
+
+                <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                    android:id="@+id/tv_fileName"
+                    style="@style/match_match"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/app_five_dp"
+                    android:maxLines="1"
+                    android:text="Document Name"
+                    android:textColorHint="@color/app_black_buttons_bg_color"
+                    android:textSize="@dimen/app_eighteen_sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

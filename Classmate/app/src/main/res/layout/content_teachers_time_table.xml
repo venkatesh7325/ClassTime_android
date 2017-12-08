@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FEFEFE"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="org.com.classmate.ui.activities.teacher.TeachersTimeTableActivity"
+    tools:showIn="@layout/activity_teachers_time_table">
+
+
+    <TextView
+        android:layout_alignParentTop="true"
+        android:id="@+id/textWeekDate"
+        style="@style/MyTextViewStyleBold"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Feb 22-28, 2017" />
+
+
+    <!--<GridView
+        android:id="@+id/timeTableGrid"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:verticalSpacing="3dp"
+        android:horizontalSpacing="3dp"
+        android:numColumns="7"
+        android:layout_marginTop="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />-->
+ <!--   <com.jess.ui.TwoWayGridView
+
+        android:background="#E8E8E8"
+        android:id="@+id/timeTableGrid"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:cacheColorHint="#E8E8E8"
+        app:columnWidth="80dp"
+        app:rowHeight="80dp"
+        app:verticalSpacing="16dp"
+        app:horizontalSpacing="16dp"
+        app:stretchMode="spacingWidthUniform"
+        app:scrollDirectionPortrait="horizontal"
+        app:scrollDirectionLandscape="horizontal"
+        app:gravity="center"/>-->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f5f6fa"
+        android:layout_below="@+id/textWeekDate"
+        android:layout_above="@+id/layoutBottom"
+        android:layout_marginRight="-180dp"
+       >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_gridtableLayout"
+                android:layout_width="900dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <GridView
+                    android:id="@+id/timeTableGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:columnWidth="100dp"
+                    android:gravity="center"
+                    android:numColumns="7"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:scrollbars="horizontal"
+                    android:stretchMode="none"
+                    android:verticalSpacing="1dp">
+
+                </GridView>
+
+
+            </LinearLayout>
+        </FrameLayout>
+    </HorizontalScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/layoutBottom"
+        android:background="@color/time_table_bottom1"
+        android:layout_alignParentBottom="true"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:layout_marginLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:layout_width="match_parent"
+                android:id="@+id/selectedDate"
+                android:drawableLeft="@android:drawable/ic_menu_my_calendar"
+                android:textColor="@color/color_gray"
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:text="Wed Feb 2013"
+                android:layout_height="wrap_content" />
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:layout_width="match_parent"
+                android:id="@+id/selectedtime"
+                android:drawablePadding="10dp"
+                android:textColor="@color/color_gray"
+                android:gravity="center_vertical"
+                android:drawableLeft="@android:drawable/ic_input_get"
+                android:layout_marginBottom="10dp"
+                android:text="10:00 - 13:00 Pm"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:background="@color/time_table_bottom2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:layout_width="match_parent"
+                style="@style/MyTextViewStyleBold"
+                android:gravity="center"
+                android:textColor="@color/color_gray"
+                android:layout_marginBottom="5dp"
+                android:text="Continue"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+
+

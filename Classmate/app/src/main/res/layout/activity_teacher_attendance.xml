@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true"
+    tools:context="org.com.classmate.ui.activities.teacher.TeacherAttendanceActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/ll_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_submit_attendance"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:padding="@dimen/app_five_dp"
+        tools:context="org.com.classmate.ui.activities.teacher.TeacherAttendanceActivity">
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_select_branch"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:background="@drawable/rounded_corners"
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/app_ten_dp"
+            android:hint="Select Your Depts"
+            android:textColorHint="@color/font_color" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg_blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Spinner
+                android:id="@+id/sp_choose_years"
+                style="@style/match_wrap"
+                android:layout_weight="1"
+                android:entries="@array/years_arrays" />
+
+            <Spinner
+                android:id="@+id/sp_choose_semi"
+                style="@style/match_wrap"
+                android:layout_weight="1"
+                android:entries="@array/semi_arrays" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg_blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/app_ten_dp"
+            android:orientation="horizontal">
+
+            <org.com.classmate.utils.customfonts.CustomTextViewMedium
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date :" />
+
+            <org.com.classmate.utils.customfonts.CustomEditTextMedium
+                android:id="@+id/edt_attendanceDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_ten_dp"
+                android:drawableRight="@android:drawable/ic_menu_my_calendar"
+                android:gravity="center"
+                android:text="18July, 2017"
+                android:textColor="@color/app_black_buttons_bg_color" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg_blue" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_students_attendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_ten_dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit_attendance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textColor="@color/app_white_buttons_bg_color" />
+</RelativeLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/app_ten_dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fivedp"
+        android:background="@color/dash_board_gray"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/app_ten_dp"
+            android:text="Select Year and Semester"
+            android:textColor="@color/app_white_buttons_bg_color"
+            android:textSize="@dimen/app_twenty_sp" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/fivedp"
+            android:src="@drawable/close_delete" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/sp_choose_years"
+            style="@style/match_wrap"
+            android:entries="@array/years_arrays"
+            android:padding="@dimen/app_ten_dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+
+        <Spinner
+            android:id="@+id/sp_choose_semi"
+            style="@style/match_wrap"
+            android:layout_marginTop="@dimen/app_ten_dp"
+            android:entries="@array/semi_arrays"
+            android:padding="@dimen/app_ten_dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_board_gray" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_ten_dp"
+        android:background="@drawable/blue_rounded_corners"
+        android:paddingLeft="@dimen/app_fifteen_dp"
+        android:paddingRight="@dimen/app_fifteen_dp"
+        android:text="@string/submit"
+        android:textColor="@color/app_white_buttons_bg_color" />
+</LinearLayout>
