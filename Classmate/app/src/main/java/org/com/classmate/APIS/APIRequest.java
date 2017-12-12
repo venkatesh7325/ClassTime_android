@@ -15,7 +15,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.com.classmate.interfaces.CreateTimeTable;
+import org.com.classmate.interfaces.ShowTimetable;
 import org.com.classmate.interfaces.SubjectListResponse;
+import org.com.classmate.model.showTimetable.ShowTimetableDetails;
 import org.com.classmate.model.students.StudentsList.GetStudentsListPojo;
 import org.com.classmate.model.subjectList.SubjectListDetails;
 import org.com.classmate.utils.ApiConstants;
@@ -382,6 +385,83 @@ public class APIRequest {
                         studentListResponse.subjectListResponse(getStudentsListPojo);
                     }
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed(String message) {
+                ToastUtils.displayToast(Constants.something_went_wrong, context);
+                Log.d(TAG, "Login Error message--" + message + "--jon respons--" + hashMap);
+
+            }
+        });
+    }
+
+    public static void createTimeTable(final Context context,String branch, String year, String sem,String teacherid,String period, String subject, String day,   final CreateTimeTable createTableResponse) {
+//        {"year":"1","semester":"1","branch_id":"1"}
+        final HashMap<String, String> hashMap = new HashMap<String, String>();
+        try {
+            // hashMap.put("name", clzName);
+            hashMap.put("branch_id", branch);
+            hashMap.put("year", year);
+            hashMap.put("semester", sem);
+            hashMap.put("teacher_id", teacherid);
+            hashMap.put("period", period);
+            hashMap.put("day", day);
+            hashMap.put("subject_id", subject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "Admin User HASHAMP--" + hashMap);
+        new APIRequest(context).postStringRequest(ApiConstants.TIME_TABLE, hashMap, new RequestCallBack() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Dash Admin Activity--" + response);
+                try {
+                    createTableResponse.createTimeTable(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed(String message) {
+                ToastUtils.displayToast(Constants.something_went_wrong, context);
+                Log.d(TAG, "Login Error message--" + message + "--jon respons--" + hashMap);
+
+            }
+        });
+    }
+    public static void showTimeTable(final Context context,String teacherId, String day,  final ShowTimetable showTable) {
+        final HashMap<String, String> hashMap = new HashMap<String, String>();
+        try {
+            // hashMap.put("name", clzName);
+            hashMap.put("teacher_id", teacherId);
+            hashMap.put("day", day);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "Admin User HASHAMP--" + hashMap);
+        new APIRequest(context).postStringRequest(ApiConstants.SHOW_TIME_TABLE, hashMap, new RequestCallBack() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Dash Admin Activity--" + response);
+                try {
+                    JSONObject jsonObj = new JSONObject(response);
+                    String status = jsonObj.getString("status");
+                    String timeTable = jsonObj.getString("timeTable");
+
+                    if (status.equalsIgnoreCase("1"))
+                    {
+                        Gson gson = new Gson();
+                        ShowTimetableDetails showTableDetails = gson.fromJson(response, ShowTimetableDetails.class);
+                        showTable.showTimeTableDetails(showTableDetails);
+                    }
+                    //createTableResponse.createTimeTable(response);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

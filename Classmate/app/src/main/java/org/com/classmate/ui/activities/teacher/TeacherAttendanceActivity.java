@@ -1,38 +1,44 @@
 package org.com.classmate.ui.activities.teacher;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.com.classmate.APIS.APIRequest;
 import org.com.classmate.APIS.RequestCallBack;
+import org.com.classmate.APIS.StudentListResponse;
 import org.com.classmate.R;
-import org.com.classmate.adapter.StudentListAdapter;
 import org.com.classmate.adapter.TeacherAttendanceAdapter;
 import org.com.classmate.model.BranchList;
 import org.com.classmate.model.LoginResponseModel.LoginResponsePojo;
+import org.com.classmate.model.students.StudentsList.GetStudentsListPojo;
 import org.com.classmate.model.students.StudentsList.StudentList;
 import org.com.classmate.model.teacher.teacher_attendance_module.AttendanceReport;
 import org.com.classmate.model.teacher.teacher_attendance_module.AttendnceReport;
 import org.com.classmate.model.teacher.teacher_attendance_module.SubmitAttendancePojo;
-import org.com.classmate.model.teacher.teacher_attendance_module.TeacherAttendanceModel;
-import org.com.classmate.ui.activities.common.LoginActivity;
-import org.com.classmate.ui.activities.students.StudentFormActivity;
 import org.com.classmate.utils.ApiConstants;
 import org.com.classmate.utils.Constants;
+import org.com.classmate.utils.Logger;
 import org.com.classmate.utils.ToastUtils;
 import org.com.classmate.utils.Utility;
 import org.com.classmate.utils.customfonts.CustomEditTextMedium;
@@ -51,12 +57,16 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
     Button btnSelectedRg;
     TeacherAttendanceAdapter teacherAttendanceAdapter;
     List<AttendnceReport> teacherAttendanceModelsList;
-    @Bind(R.id.edt_attendanceDate)
-    EditText edtAttendanceDate;
+    CustomEditTextMedium edtAttendanceDate;
     List<BranchList> branchListsFromPref = null;
     private String branchId = "";
-    CustomEditTextMedium edtBranch;
+    // CustomEditTextMedium edtBranch;
     List<StudentList> getStudentsListPojo;
+    String yearValue = "", semValues = "";
+    Button btnGetStudentList;
+    Spinner spYear;
+    Spinner spSem;
+    CustomEditTextMedium edtBranch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,19 +81,69 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Attendance");
+
+        spYear = (Spinner) findViewById(R.id.sp_choose_years);
+        spSem = (Spinner) findViewById(R.id.sp_choose_semi);
+        edtAttendanceDate = (CustomEditTextMedium) findViewById(R.id.edt_attendanceDate);
         edtBranch = (CustomEditTextMedium) findViewById(R.id.edt_select_branch);
         edtBranch.setOnClickListener(this);
         edtBranch.setOnFocusChangeListener(this);
         edtBranch.setInputType(InputType.TYPE_NULL);
+
+        btnGetStudentList = (Button) findViewById(R.id.btn_getStudents);
+        btnGetStudentList.setOnClickListener(this);
+
         rcvStudentsList = (RecyclerView) findViewById(R.id.rcv_students_attendance);
         btnSelectedRg = (Button) findViewById(R.id.btn_submit_attendance);
+
         btnSelectedRg.setOnClickListener(this);
+        btnSelectedRg.setVisibility(View.GONE);
 
         edtAttendanceDate.setOnClickListener(this);
+        edtAttendanceDate.setOnFocusChangeListener(this);
         edtAttendanceDate.setInputType(InputType.TYPE_NULL);
         edtAttendanceDate.setCursorVisible(false);
-        getParecDataFromBundle();
     }
+
+
+    private void callApiGetStudentsList() {
+        try {
+            if (getResources().getString(R.string.Spiner_year_prompt).equalsIgnoreCase(spYear.getSelectedItem().toString())) {
+                ToastUtils.displayToast("Please select year", TeacherAttendanceActivity.this);
+                return;
+            }
+            if (getResources().getString(R.string.Spiner_semi_prompt).equalsIgnoreCase(spSem.getSelectedItem().toString())) {
+                ToastUtils.displayToast("Please select semester", TeacherAttendanceActivity.this);
+                return;
+            }
+            if (edtBranch.getText().toString().isEmpty()) {
+                ToastUtils.displayToast("Please select Department", TeacherAttendanceActivity.this);
+                return;
+            }
+            yearValue = Constants.getYearId(spYear.getSelectedItem().toString());
+            semValues = Constants.getYearId(spSem.getSelectedItem().toString());
+
+            if (!Utility.isConnectingToInternet(TeacherAttendanceActivity.this)) {
+                ToastUtils.displayToast(Constants.no_internet_connection, TeacherAttendanceActivity.this);
+                return;
+            }
+            APIRequest.callApiToGetStudentList(TeacherAttendanceActivity.this, Constants.getYearId(spYear.getSelectedItem().toString()), Constants.getYearId(spSem.getSelectedItem().toString()), branchId, Utility.getInstitutionId(TeacherAttendanceActivity.this), new StudentListResponse() {
+                @Override
+                public void stdList(GetStudentsListPojo getStudentsModel) {
+                    Logger.logD(TAG, " List - size -- " + getStudentsModel.getStudentList().size());
+                    getStudentsListPojo = getStudentsModel.getStudentList();
+                    if (getStudentsListPojo != null && getStudentsListPojo.size() > 0) {
+                        btnSelectedRg.setVisibility(View.VISIBLE);
+                        setAdapter(getStudentsListPojo);
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     void getParecDataFromBundle() {
         try {
@@ -117,8 +177,13 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
             case R.id.edt_attendanceDate:
                 Utility.showDatePickerDialog(this, edtAttendanceDate, "Attendance Date");
                 break;
+            case R.id.btn_getStudents:
+                callApiGetStudentsList();
+                break;
             case R.id.edt_select_branch:
                 loadBranchAndSelect();
+                break;
+            default:
                 break;
         }
     }
@@ -145,23 +210,32 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
 
     void callApiToSubmitAttendance(List<AttendanceReport> list) {
         SubmitAttendancePojo submitAttendancePojo = new SubmitAttendancePojo();
-        submitAttendancePojo.setBranchId("10");
-        submitAttendancePojo.setYear("1");
-        submitAttendancePojo.setSemester("1");
+        submitAttendancePojo.setBranchId(branchId);
+        submitAttendancePojo.setYear(yearValue);
+        submitAttendancePojo.setSemester(semValues);
         submitAttendancePojo.setTeacherId(String.valueOf(Utility.getUserID(TeacherAttendanceActivity.this)));
         submitAttendancePojo.setAttendanceDate(edtAttendanceDate.getText().toString());
         submitAttendancePojo.setAttendanceReport(list);
         Gson gson = new Gson();
-        Type type = new TypeToken<SubmitAttendancePojo>() {
+        Type type = new TypeToken<List<AttendanceReport>>() {
         }.getType();
-        String attendanceResponse = gson.toJson(submitAttendancePojo, type);
+        String attendanceResponse = gson.toJson(list, type);
         Log.d(TAG, "Attendance Response--" + attendanceResponse);
-        //ToastUtils.displayToast("Success", this);
-        //ToastUtils.displayToast("Success", this);
+
         final HashMap<String, String> hashMap = new HashMap<String, String>();
         try {
-           // hashMap.put("id", String.valueOf(Utility.getUserID(TeacherAttendanceActivity.this)));
-            hashMap.put("", attendanceResponse);
+            /*"teacher_id": "2",
+    "branch_id": "2",
+    "year": "1",
+    "semester": "2",
+    "attendance_date": "2017-09-30",
+  */
+            hashMap.put("teacher_id", String.valueOf(Utility.getUserID(TeacherAttendanceActivity.this)));
+            hashMap.put("year", yearValue);
+            hashMap.put("semester", semValues);
+            hashMap.put("attendance_date", edtAttendanceDate.getText().toString().trim());
+            hashMap.put("branch_id", branchId);
+            hashMap.put("attendance_report", attendanceResponse);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,10 +308,23 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
 
 
     @Override
-    public void onFocusChange(View view, boolean b) {
-        if (!b) {
-            return;
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.edt_select_branch:
+                if (!hasFocus) {
+                    return;
+                }
+                loadBranchAndSelect();
+                break;
+            case R.id.edt_attendanceDate:
+                if (!hasFocus) {
+                    return;
+                }
+                Utility.showDatePickerDialog(this, edtAttendanceDate, "Attendance Date");
+                break;
+            default:
+                break;
         }
-        loadBranchAndSelect();
+
     }
 }

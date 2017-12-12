@@ -25,5 +25,7 @@ public class ApiConstants {
     public static final String TASK_LIST_STUDENT = "taskListForStudents";
     public static final String TASK_LIST_TEACHER = "tasklistForTeacher";
     public static final String SUBJECT_LIST = "subjectList";
+    public static final String TIME_TABLE ="CreateTimeTable";
+    public static final String SHOW_TIME_TABLE ="ShowTimeTable";
 
 }

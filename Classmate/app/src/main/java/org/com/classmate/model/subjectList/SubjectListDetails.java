@@ -26,7 +26,7 @@ public class SubjectListDetails implements Parcelable {
 
     }
 
-    public SubjectListDetails(Parcel in) {
+    protected SubjectListDetails(Parcel in) {
         status = in.readString();
         message = in.readString();
         subjectList = in.createTypedArrayList(SubjectList.CREATOR);

@@ -109,11 +109,16 @@ public class TeachersDashboardActivity extends AppCompatActivity implements View
         findViewById(R.id.ll_attendance).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /* if (!Utility.isConnectingToInternet(TeachersDashboardActivity.this)) {
+                    ToastUtils.displayToast(Constants.no_internet_connection, TeachersDashboardActivity.this);
+                    return;
+                }
+                popupToGetStudentsList(TeachersDashboardActivity.this);*/
                 if (!Utility.isConnectingToInternet(TeachersDashboardActivity.this)) {
                     ToastUtils.displayToast(Constants.no_internet_connection, TeachersDashboardActivity.this);
                     return;
                 }
-                popupToGetStudentsList(TeachersDashboardActivity.this);
+                startActivity(new Intent(TeachersDashboardActivity.this, TeacherAttendanceActivity.class));
             }
         });
 

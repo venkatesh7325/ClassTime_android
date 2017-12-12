@@ -208,4 +208,10 @@ public class SubjectList implements Parcelable
         this.deletedAt = deletedAt;
     }
 
+    public String toString()
+    {
+        return name;
+    }
+
+
 }

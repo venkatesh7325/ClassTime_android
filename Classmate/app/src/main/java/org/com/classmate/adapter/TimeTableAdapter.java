@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.com.classmate.R;
+import org.com.classmate.interfaces.TimeSelected;
 import org.com.classmate.model.teacher.TimeTable;
-import org.com.classmate.ui.activities.teacher.TeachersTimeTableActivity;
-import org.com.classmate.utils.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -21,16 +19,18 @@ import java.util.ArrayList;
  * Created by Parnika on 16-07-2017.
  */
 
-public class TimeTableAdapter extends BaseAdapter {
+public class TimeTableAdapter extends BaseAdapter{
     private Context mContext;
 
     // Keep all Images in array
     public ArrayList<TimeTable> list;
+    TimeSelected selectedPosition;
 
     // Constructor
-    public TimeTableAdapter(Context c, ArrayList<TimeTable> listtable) {
+    public TimeTableAdapter(Context c, ArrayList<TimeTable> listtable, TimeSelected selected) {
         mContext = c;
         list = listtable;
+        selectedPosition=selected;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TimeTableAdapter extends BaseAdapter {
         grid = new View(mContext);
         grid = inflater.inflate(R.layout.snippet_time_table, null);
         TextView textView = (TextView) grid.findViewById(R.id.txtTimeValue);
-        View viewBg = (View) grid.findViewById(R.id.viewBackground);
+        final View viewBg = (View) grid.findViewById(R.id.viewBackground);
         View viewLine = (View) grid.findViewById(R.id.hriLine);
 
         if (list.get(position).getEnable().equals("text")) {
@@ -75,8 +75,8 @@ public class TimeTableAdapter extends BaseAdapter {
         } else {
             textView.setTextColor(Color.parseColor("#C4C5C8"));
         }
-
-        viewBg.setBackground(mContext.getResources().getDrawable(R.drawable.view_round_cyan));
+        textView.setTextColor(Color.WHITE);
+        viewBg.setBackground(mContext.getResources().getDrawable(R.drawable.view_round_gray));
         viewBg.setBackground(list.get(position).getSlected().equals("true") ?
                 mContext.getResources().getDrawable(R.drawable.view_round_cyan) :
                 mContext.getResources().getDrawable(R.drawable.view_round_gray));
@@ -87,8 +87,11 @@ public class TimeTableAdapter extends BaseAdapter {
                 String value = list.get(position).getSlected();
                 list.get(position).setSlected(value.equals("true") ? "false" : "true");
                 notifyDataSetChanged();
+                viewBg.setBackground(mContext.getResources().getDrawable(R.drawable.view_round_gray));
+                selectedPosition.getTheSelectedPosition(position);
             }
         });
         return grid;
     }
+
 }

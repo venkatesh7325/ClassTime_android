@@ -246,7 +246,7 @@ public class TeachersTaskAssignActivity extends AppCompatActivity implements Vie
             AlertDialog.Builder builder = new AlertDialog.Builder(TeachersTaskAssignActivity.this);
             builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
-                    SubjectListDetails getStudentsListPojo = new SubjectListDetails();
+                  //  SubjectListDetails getStudentsListPojo = new SubjectListDetails();
                     edtTaskSubject.setText(subjectLists.get(item).getName());
                     edtTaskSubject.setTag(subjectLists.get(item).getId());
                     Log.d(TAG, "edtTaskSubject Name " + subjectLists.get(item).getName());

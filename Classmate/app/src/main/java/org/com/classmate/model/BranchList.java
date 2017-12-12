@@ -28,5 +28,9 @@ public class BranchList {
     public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
+    public String toString()
+    {
+        return branchName;
+    }
 
 }

@@ -96,6 +96,7 @@
         android:background="@color/time_table_bottom1"
         android:layout_alignParentBottom="true"
         android:weightSum="1"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
         <LinearLayout

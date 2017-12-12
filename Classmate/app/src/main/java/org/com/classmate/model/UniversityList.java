@@ -28,5 +28,8 @@ public class UniversityList {
     public void setUniversityName(String universityName) {
         this.universityName = universityName;
     }
+    public String toString() {
+        return universityName;
+    }
 
 }
