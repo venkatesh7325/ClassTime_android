@@ -5,7 +5,17 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class TaskList {
+    public String getSubject_name() {
+        return subject_name;
+    }
 
+    public void setSubject_name(String subject_name) {
+        this.subject_name = subject_name;
+    }
+
+    @SerializedName("subject_name")
+    @Expose
+    private String subject_name;
     @SerializedName("id")
     @Expose
     private Integer id;

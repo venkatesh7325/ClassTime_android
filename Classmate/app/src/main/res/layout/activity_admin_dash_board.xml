@@ -13,13 +13,15 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue"
+        android:background="@color/colorPrimary"
         app:layout_scrollFlags="scroll|enterAlways" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_one_fifty_dp"
-        android:src="@drawable/classroom" />
+        android:paddingTop="@dimen/fivedp"
+        android:paddingBottom="@dimen/fivedp"
+        android:src="@drawable/class_stu" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

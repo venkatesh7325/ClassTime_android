@@ -7,7 +7,7 @@ package org.com.classmate.utils;
 public class ApiConstants {
 
     public static final String BASE_URL = "http://13.126.9.201/api/"; // class time url
-//    public static final String BASE_URL = "http://192.168.1.19/classtime/public/api/"; // local url
+//    public static final String BASE_URL = "http://192.168.1.14/classtime/public/api/"; // local url
 
     public static final String UNIVERSITY = "University";
     public static final String Authorization = "e3b392cea2b19a23deee95f2e4e0057f21d1d061"; // live

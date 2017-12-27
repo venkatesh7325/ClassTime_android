@@ -27,11 +27,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+        <org.com.classmate.utils.customfonts.CustomTextViewBold
             style="@style/match_wrap"
             android:text="@string/all_your_classes_org"
             android:textAlignment="center"
-            android:textColor="@color/font_color_1"
+            android:textColor="@color/app_introduction_color"
             android:layout_marginTop="@dimen/app_ten_dp"
             android:textSize="@dimen/app_twenty_two_sp" />
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Class Time</string>
 
+    <string name="folder_name">ClassTime</string>
 
     <!-- Landing screen strings-->
     <string name="mon">Monday</string>
@@ -14,7 +15,7 @@
     <string name="all_your_classes_org">All Your Classes Organized</string>
     <string name="all_your_classes_org_in_way">All Your Classes Organized in a way that you\nnever lose track of one</string>
     <string name="singn_up">SIGN UP</string>
-    <string name="already_member">Already a Member?</string>
+    <string name="already_member">Already a Member? Sign in</string>
     <string name="sign_in">Sign in</string>
     <string name="take_test">Take Test On The Go</string>
     <string name="all_your_test">All your tests from all your batches are \n available to you wherever you are</string>
@@ -85,7 +86,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_admin_dashboard">AdminDashboardActivity</string>
     <string name="title_activity_lesson">LessonActivity</string>
-    <string name="title_activity_teachers_time_table">TeachersTimeTableActivity</string>
+    <string name="title_activity_teachers_time_table">Teacher TimeTable</string>
     <string name="submit">Submit</string>
 
     <string name="hint_task_name">Task Name</string>
@@ -100,5 +101,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="coming_soon">Coming soon...</string>
+    <string name="title_activity_events">Events</string>
+    <string name="next">NEXT</string>
+    <string name="save">Save</string>
+    <string name="proceed">Proceed</string>
 
 </resources>

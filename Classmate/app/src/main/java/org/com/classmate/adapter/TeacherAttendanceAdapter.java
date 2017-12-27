@@ -57,13 +57,20 @@ public class TeacherAttendanceAdapter extends RecyclerView.Adapter<TeacherAttend
     public void onBindViewHolder(AttendanceViewHolder holder, final int position) {
         holder.stdName.setText(getStudentsListPojo.get(position).getName());
         holder.stdRollNumber.setText(getStudentsListPojo.get(position).getRollNumber());
+
         holder.rgStudentAttendanceStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId != -1) {
+                     String attendanceFlag;
                     RadioButton checked_rb = (RadioButton) group.findViewById(checkedId);
+                    if ("Present".equalsIgnoreCase(checked_rb.getText().toString())) {
+                        attendanceFlag ="1";
+                    }else{
+                        attendanceFlag ="0";
+                    }
                     Log.d(TAG, "Check item by Name--" + getStudentsListPojo.get(position).getName() + "--Checked item--" + checked_rb.getText().toString());
-                    mapAttendance.put(getStudentsListPojo.get(position).getRollNumber(), new AttendanceReport(getStudentsListPojo.get(position).getRollNumber(), checked_rb.getText().toString()));
+                    mapAttendance.put(getStudentsListPojo.get(position).getRollNumber(), new AttendanceReport(String.valueOf(getStudentsListPojo.get(position).getId()), attendanceFlag));
                     // generateAttendanceList.add(position, new AttendnceReport(teacherAttendanceModelsList.get(position).getSRollnumber(), teacherAttendanceModelsList.get(position).getSName(), checked_rb.getText().toString()));
                     Log.d(TAG, "Checked radio button mapAttendance size--" + mapAttendance.size());
                 }

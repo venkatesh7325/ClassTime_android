@@ -49,6 +49,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Attend
                 holder.taskStartDate.setText(taskList.getStartDate());
             if (taskList.getEndDate() != null)
                 holder.taskEndDate.setText(taskList.getEndDate());
+            if (taskList.getSubject_name() != null)
+                holder.subjectName.setText(taskList.getSubject_name());
+
 
       /*  holder.taskStatus.setText(taskList.get());
         holder.taskComment.setText(taskList.get());*/

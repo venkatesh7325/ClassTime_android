@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserDetails {
 
+    /*{"message":"success","user_details":{"id":3,"name":"Pragathi college of engineering","code":"PCEEAD3","college_code":"PCEE","university_id":3,"email":"venky@gmail.com","mobile":"7829648388","address":"Bangalore","city":"Bangalore","pincode":560043,"user_id":3,"status":1,"created_at":"2017-09-30 07:33:05","updated_at":"2017-09-30 07:33:05","deleted_at":null}}*/
+
     @SerializedName("id")
     @Expose
     private Integer id;

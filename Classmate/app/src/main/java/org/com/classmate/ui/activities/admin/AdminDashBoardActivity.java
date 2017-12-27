@@ -1,42 +1,25 @@
 package org.com.classmate.ui.activities.admin;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.google.gson.Gson;
-
-import org.com.classmate.APIS.APIRequest;
-import org.com.classmate.APIS.RequestCallBack;
 import org.com.classmate.R;
-import org.com.classmate.model.LoginResponseModel.LoginResponsePojo;
-import org.com.classmate.model.UserDetails.GetUserDetailsResponsePojo;
 import org.com.classmate.ui.activities.common.LoginActivity;
-import org.com.classmate.ui.activities.teacher.TeachersDashboardActivity;
 import org.com.classmate.ui.fragments.admin.CollegeDepartmentFragment;
 import org.com.classmate.ui.fragments.admin.CollegeInformationFragment;
 import org.com.classmate.ui.fragments.admin.CollegePlacementsFragment;
-import org.com.classmate.utils.ApiConstants;
 import org.com.classmate.utils.Constants;
-import org.com.classmate.utils.ToastUtils;
-import org.com.classmate.utils.Utility;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AdminDashBoardActivity extends AppCompatActivity {
@@ -92,7 +75,7 @@ public class AdminDashBoardActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            startActivity(new Intent(AdminDashBoardActivity.this, LoginActivity.class));
+            Constants.popupToLogOut(AdminDashBoardActivity.this);
             finish();
         }
 

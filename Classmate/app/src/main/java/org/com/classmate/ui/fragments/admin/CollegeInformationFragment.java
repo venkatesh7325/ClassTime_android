@@ -17,6 +17,7 @@ import org.com.classmate.APIS.RequestCallBack;
 import org.com.classmate.R;
 import org.com.classmate.model.GetClz.GetCollegeResponsePojo;
 import org.com.classmate.model.UserDetails.GetUserDetailsResponsePojo;
+import org.com.classmate.ui.activities.admin.AdminFormActivity;
 import org.com.classmate.utils.ApiConstants;
 import org.com.classmate.utils.Constants;
 import org.com.classmate.utils.ToastUtils;
@@ -103,7 +104,7 @@ public class CollegeInformationFragment extends Fragment {
         final HashMap<String, String> hashMap = new HashMap<String, String>();
         try {
             // hashMap.put("name", clzName);
-            hashMap.put("id", String.valueOf(Utility.getUserID(context)));
+            hashMap.put("id", String.valueOf(Utility.getLoginID(context)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,6 +116,7 @@ public class CollegeInformationFragment extends Fragment {
                 Gson gson = new Gson();
                 GetCollegeResponsePojo successResponsePojo = gson.fromJson(response, GetCollegeResponsePojo.class);
                 if (successResponsePojo.getMessage().equalsIgnoreCase("success")) {
+                    Utility.saveUserID(getActivity(), successResponsePojo.getUserDetails().getId()); // saving user ID into pref
                     tvClzName.setText(successResponsePojo.getUserDetails().getName() + "(" + successResponsePojo.getUserDetails().getCollegeCode() + ")");
                     tvClzEmail.setText(successResponsePojo.getUserDetails().getEmail());
                     tvClzNumber.setText(successResponsePojo.getUserDetails().getMobile());
@@ -124,7 +126,6 @@ public class CollegeInformationFragment extends Fragment {
                 } else {
                     ToastUtils.displayToast(Constants.something_went_wrong, context);
                 }
-
             }
 
             @Override

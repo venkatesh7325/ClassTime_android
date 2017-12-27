@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,19 +42,28 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.com.classmate.APIS.APIRequest;
 import org.com.classmate.APIS.RequestCallBack;
+import org.com.classmate.APIS.StudentListResponse;
 import org.com.classmate.R;
 import org.com.classmate.model.BranchList;
 import org.com.classmate.model.SuccessResponsePojo;
 import org.com.classmate.model.UniversityList;
 import org.com.classmate.model.admin.AdminDetails;
+import org.com.classmate.model.students.StudentsList.GetStudentsListPojo;
 import org.com.classmate.ui.activities.common.IntroductionActivity;
 import org.com.classmate.ui.activities.common.LoginActivity;
+import org.com.classmate.ui.activities.hod.HodFormActivity;
 import org.com.classmate.ui.activities.students.StudentsListActivity;
+import org.com.classmate.ui.activities.teacher.TeacherAttendanceActivity;
+import org.com.classmate.ui.activities.teacher.TeachersDashboardActivity;
 import org.com.classmate.utils.ApiConstants;
 import org.com.classmate.utils.Constants;
 import org.com.classmate.utils.FileUtils;
+import org.com.classmate.utils.Logger;
 import org.com.classmate.utils.ToastUtils;
 import org.com.classmate.utils.Utility;
+import org.com.classmate.utils.customfonts.CustomEditTextMedium;
+import org.com.classmate.utils.customfonts.CustomTextViewBold;
+import org.com.classmate.utils.customfonts.CustomTextViewMedium;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -67,19 +77,16 @@ import java.util.Set;
 import butterknife.ButterKnife;
 
 public class AdminFormActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
-    private CircularImageView imgProfile;
     MyCustomAdapter dataAdapter;
-    private Spinner spinUniversity;
-    private EditText edtEmail, edtCname, edtCCode, edtSelectBranch;
-    private EditText edtPassword, edtCnfPwd;
-    private EditText edtAddress, edtCity, edtPinCode, edtMobileNumber;
+     EditText edtSelectBranch;
     private String TAG = AdminFormActivity.class.getSimpleName();
-    String unvId = "1";
+    String unvId = "";
     List<BranchList> branchListsFromPref = null;
     HashMap<Integer, Integer> map = new HashMap<>();
-    private static final int SELECT_FILE = 101;
-    private static final int REQUEST_CAMERA = 102;
-    Bitmap bitmapUser;
+    CustomTextViewBold tvH, tvA, tvK;
+    public String clzName;
+    public String clzCode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,23 +101,29 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
 
     private void init() {
 
-        imgProfile = (CircularImageView) findViewById(R.id.img_profile);
-        spinUniversity = (Spinner) findViewById(R.id.spin_univ);
+        tvH = (CustomTextViewBold) findViewById(R.id.tv_jntuH);
+        tvA = (CustomTextViewBold) findViewById(R.id.tv_jntuA);
+        tvK = (CustomTextViewBold) findViewById(R.id.tv_jntuK);
+
+        tvH.setOnClickListener(this);
+        tvA.setOnClickListener(this);
+        tvK.setOnClickListener(this);
+
+
+
+        /*
+         spinUniversity = (Spinner) findViewById(R.id.spin_univ);
         edtEmail = (EditText) findViewById(R.id.edt_email);
-        edtCname = (EditText) findViewById(R.id.edt_cname);
-        edtCCode = (EditText) findViewById(R.id.edt_ccode);
+
         edtPassword = (EditText) findViewById(R.id.edt_password);
         edtCnfPwd = (EditText) findViewById(R.id.edt_cnf_password);
         edtAddress = (EditText) findViewById(R.id.edt_address);
         edtCity = (EditText) findViewById(R.id.edt_city);
         edtPinCode = (EditText) findViewById(R.id.edt_pincode);
-        edtSelectBranch = (EditText) findViewById(R.id.edt_select_branch);
-        edtMobileNumber = (EditText) findViewById(R.id.edt_mobile);
-        edtSelectBranch.setOnClickListener(this);
-        edtSelectBranch.setOnFocusChangeListener(this);
-        edtSelectBranch.setInputType(InputType.TYPE_NULL);
 
-        imgProfile.setOnClickListener(this);
+        edtMobileNumber = (EditText) findViewById(R.id.edt_mobile);
+       */
+
         getUnviListFromPref();
         getBranchFromPref();
     }
@@ -127,16 +140,26 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
                 List<String> list = new ArrayList<>();
                 for (int i = 0; i < universityLists.size(); i++) {
                     list.add(universityLists.get(i).getUniversityName());
+                    tvH.setText(universityLists.get(0).getUniversityName());
                 }
-                if (list.size() > 0)
-                    setUnvToSpinner(list, universityLists);
+                if (list.size() > 0) {
+                    tvH.setText(universityLists.get(0).getUniversityName());
+                    tvH.setTag(universityLists.get(0).getUniversityId());
+
+                    tvA.setText(universityLists.get(1).getUniversityName());
+                    tvA.setTag(universityLists.get(1).getUniversityId());
+
+                    tvK.setText(universityLists.get(2).getUniversityName());
+                    tvK.setTag(universityLists.get(2).getUniversityId());
+                }
+                // setUnvToSpinner(list, universityLists);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setUnvToSpinner(final List<String> universityLists, final List<UniversityList> unvList) {
+    /*private void setUnvToSpinner(final List<String> universityLists, final List<UniversityList> unvList) {
         Log.d(TAG, "Unv-list set adapter--" + universityLists.size() + "--fjk--" + unvId);
         ArrayAdapter<String> arrayListAdapter = new ArrayAdapter<String>(AdminFormActivity.this, android.R.layout.simple_spinner_dropdown_item, universityLists);
         spinUniversity.setAdapter(arrayListAdapter);
@@ -153,7 +176,7 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-    }
+    }*/
 
     private void getBranchFromPref() {
         try {
@@ -168,7 +191,7 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menuchanges, menu);
@@ -187,7 +210,7 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
                 if (Utility.isConnectingToInternet(AdminFormActivity.this)) {
                     doRegistration();
                 } else {
-                    ToastUtils.displayToast(Constants.no_internet_connection, AdminFormActivity.this);
+                    ToastUtils.displayToast(Constants.no_internet_connection, AdminFormActivity.AdminFormActivity.this);
                 }
                 break;
             default:
@@ -195,9 +218,9 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
         }
 
         return true;
-    }
+    }*/
 
-    private void doRegistration() {
+  /*  private void doRegistration() {
 
         String clzName = edtCname.getText().toString().trim();
         String clzCode = edtCCode.getText().toString().trim();
@@ -206,82 +229,83 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
         String clzAddress = edtAddress.getText().toString();
         String clzPincode = edtPinCode.getText().toString().trim();
 
+
         if (TextUtils.isEmpty(clzName)) {
-            ToastUtils.displayToast("Please enter college name", this);
+            ToastUtils.displayToast("Please enter college name", AdminFormActivity.this);
             return;
         }
         if (clzName.length() < 3) {
-            ToastUtils.displayToast("College name minimum 3 char above", this);
+            ToastUtils.displayToast("College name minimum 3 char above", AdminFormActivity.this);
             return;
         }
 
         if (TextUtils.isEmpty(clzCode)) {
-            ToastUtils.displayToast("Please enter college code", this);
+            ToastUtils.displayToast("Please enter college code", AdminFormActivity.this);
             return;
         }
         if (clzCode.length() < 3) {
-            ToastUtils.displayToast("College code minimum 3 char above", this);
+            ToastUtils.displayToast("College code minimum 3 char above", AdminFormActivity.this);
             return;
         }
         if (TextUtils.isEmpty(clzNumber)) {
-            ToastUtils.displayToast("Please enter Mobile number", this);
+            ToastUtils.displayToast("Please enter Mobile number", AdminFormActivity.this);
             return;
         }
         if (clzNumber.length() != 10) {
-            ToastUtils.displayToast("Please enter 10 digit Mobile number", this);
+            ToastUtils.displayToast("Please enter 10 digit Mobile number", AdminFormActivity.this);
             return;
         }
         if (!Utility.isValidEmail(edtEmail.getText().toString())) {
-            ToastUtils.displayToast("Please enter valid email", this);
+            ToastUtils.displayToast("Please enter valid email", AdminFormActivity.this);
             return;
         }
         String password = edtPassword.getText().toString().trim(), cnfpassword = edtCnfPwd.getText().toString().trim();
         if (TextUtils.isEmpty(edtPassword.getText().toString())) {
-            ToastUtils.displayToast("Please enter Password", this);
+            ToastUtils.displayToast("Please enter Password", AdminFormActivity.this);
             return;
         }
         if (TextUtils.isEmpty(edtCnfPwd.getText().toString())) {
-            ToastUtils.displayToast("Please enter Confirm Password", this);
+            ToastUtils.displayToast("Please enter Confirm Password", AdminFormActivity.this);
             return;
         }
         if (password.length() < 3) {
-            ToastUtils.displayToast("Password minimum 3 char above", this);
+            ToastUtils.displayToast("Password minimum 3 char above", AdminFormActivity.this);
             return;
         }
         if (!password.equals(cnfpassword)) {
-            ToastUtils.displayToast("Password did not match", this);
+            ToastUtils.displayToast("Password did not match", AdminFormActivity.this);
             edtPassword.setText("");
             edtCnfPwd.setText("");
             return;
         }
 
         if (TextUtils.isEmpty(clzAddress)) {
-            ToastUtils.displayToast("Please enter college address", this);
+            ToastUtils.displayToast("Please enter college address", AdminFormActivity.this);
             return;
         }
         if (clzAddress.length() < 3) {
-            ToastUtils.displayToast("College address minimum 3 char above", this);
+            ToastUtils.displayToast("College address minimum 3 char above", AdminFormActivity.this);
             return;
         }
         if (TextUtils.isEmpty(clzCity)) {
-            ToastUtils.displayToast("Please enter college city", this);
+            ToastUtils.displayToast("Please enter college city", AdminFormActivity.this);
             return;
         }
         if (clzCity.length() < 3) {
-            ToastUtils.displayToast("College city minimum 3 char above", this);
+            ToastUtils.displayToast("College city minimum 3 char above", AdminFormActivity.this);
             return;
         }
         if ((TextUtils.isEmpty(clzPincode))) {
-            ToastUtils.displayToast("Please Enter Pincode ", this);
+            ToastUtils.displayToast("Please Enter Pincode ", AdminFormActivity.this);
             return;
         }
         if (clzPincode.length() != 6) {
-            ToastUtils.displayToast("Please Enter Valid Pincode ", this);
+            ToastUtils.displayToast("Please Enter Valid Pincode ", AdminFormActivity.this);
             return;
         }
 
-        /*{"message":{"name":"Muhilan","role_id":"1","email":"muhilan_admin@gmail.com","mobile":"1234567890","password":"123456",
-        "address":"Test","city":"Test","pincode":"560001","college_code":"Test001","university_id":1,"branch":"1,2,3,4"}}*/
+        *//*{"message":{"name":"Muhilan","role_id":"1","email":"muhilan_admin@gmail.com","mobile":"1234567890","password":"123456",
+        "address":"Test","city":"Test","pincode":"560001","college_code":"Test001","university_id":1,"branch":"1,2,3,4"}}*//*
         final HashMap<String, String> hashMap = new HashMap<String, String>();
         try {
             hashMap.put("name", clzName);
@@ -299,7 +323,7 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
         Log.d(TAG, "Admin Activity HASHAMP--" + hashMap);
-        new APIRequest(this).postStringRequest(ApiConstants.REGISTER, hashMap, new RequestCallBack() {
+        new APIRequest(AdminFormActivity.this).postStringRequest(ApiConstants.REGISTER, hashMap, new RequestCallBack() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "Admin Activity--" + response);
@@ -307,8 +331,7 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
                 SuccessResponsePojo successResponsePojo = gson.fromJson(response, SuccessResponsePojo.class);
                 if (successResponsePojo.getStatus().equals("1")) {
                     ToastUtils.displayToast(successResponsePojo.getMessage(), AdminFormActivity.this);
-                    //  Utility.saveUserID(AdminFormActivity.this, successResponsePojo.getId()); // saving user ID into pref
-                    saveImageIntoSdCard();
+                    Utility.saveUserID(AdminFormActivity.this, successResponsePojo.getUser_id()); // saving user ID into pref
                     Bundle b = new Bundle();
                     b.putString("mode_of_login", "Admin");
                     Intent i = new Intent(AdminFormActivity.this, LoginActivity.class);
@@ -327,24 +350,7 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
-    }
-    void saveImageIntoSdCard() {
-        try {
-            if (bitmapUser == null) {
-                Log.d(TAG, "Camera Bitmap NULL");
-                return;
-            }
-            boolean imgSaveFlag = FileUtils.saveImageIntoSdcard(AdminFormActivity.this, bitmapUser, getResources().getString(R.string.app_name) + "_" + Utility.getUserID(AdminFormActivity.this) + ".jpg");
-            Log.d(TAG, "Camera Bitmap--" + imgSaveFlag);
-            if (imgSaveFlag)
-                imgProfile.setImageBitmap(bitmapUser);
-            else
-                ToastUtils.displayToast("Image not saved in SD CARD", AdminFormActivity.this);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    }*/
 
 
     @Override
@@ -353,8 +359,20 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
             case R.id.edt_select_branch:
                 popupToShowDiscounts();
                 break;
-            case R.id.img_profile:
-                selectImage();
+            case R.id.tv_jntuH:
+                unvId = tvH.getTag().toString();
+                Log.d(TAG, "H - UNIV ID--" + unvId);
+                popupSubmitClzDetails(AdminFormActivity.this);
+                break;
+            case R.id.tv_jntuA:
+                unvId = tvA.getTag().toString();
+                Log.d(TAG, "A --UNIV ID--" + unvId);
+                popupSubmitClzDetails(AdminFormActivity.this);
+                break;
+            case R.id.tv_jntuK:
+                unvId = tvK.getTag().toString();
+                Log.d(TAG, "K ---UNIV ID--" + unvId);
+                popupSubmitClzDetails(AdminFormActivity.this);
                 break;
             default:
                 break;
@@ -364,6 +382,15 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onFocusChange(View view, boolean b) {
+
+        switch (view.getId()) {
+            case R.id.edt_select_branch:
+                if (!b) {
+                    return;
+                }
+                popupToShowDiscounts();
+                break;
+        }
     }
 
     private void popupToShowDiscounts() {
@@ -388,22 +415,9 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
             btnSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   /* String s = "";
-                    if (map.size() > 0) {
-                        for (Map.Entry<Integer, Integer> map1 : map.entrySet()) {
-                            ToastUtils.displayToast("Checked branch Value--" + map1.getValue(), AdminFormActivity.this);
-                            if (map.size() == 1)
-                                s = map1.getValue().toString();
-                            else
-                                s = map1.getValue().toString() + ",";
-                            ToastUtils.displayToast("Checked values string--" + s, AdminFormActivity.this);
-                        }
-                        ToastUtils.displayToast("Checked branch list--" + map.size(), AdminFormActivity.this);*/
                     if (dialog.isShowing())
                         dialog.dismiss();
-                    /*} else {
-                        ToastUtils.displayToast("Please select at least one branch", AdminFormActivity.this);
-                    }*/
+
                 }
             });
             if (branchListsFromPref != null && branchListsFromPref.size() > 0)
@@ -504,88 +518,217 @@ public class AdminFormActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void selectImage() { //Choose option to capture image from camera or gallery
+    private void popupSubmitClzDetails(final Context context) {
         try {
-            final CharSequence[] items = {"Camera", "Gallery"};
-            AlertDialog.Builder builder = new AlertDialog.Builder(AdminFormActivity.this);
-            builder.setTitle("Add Photo!");
-            builder.setItems(items, new DialogInterface.OnClickListener() {
+            @SuppressLint("RestrictedApi") final Dialog dialog = new Dialog(context);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup_college_details);
+            dialog.setTitle("Fill your College Details");
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_2;
+            }
+            dialog.show();
+            CustomTextViewMedium ctvNext = (CustomTextViewMedium) dialog.findViewById(R.id.tv_next);
+            final CustomEditTextMedium edtCname = (CustomEditTextMedium) dialog.findViewById(R.id.edt_cname);
+            final CustomEditTextMedium edtCCode = (CustomEditTextMedium) dialog.findViewById(R.id.edt_ccode);
+            edtSelectBranch = (CustomEditTextMedium) dialog.findViewById(R.id.edt_select_branch);
+            edtSelectBranch.setOnClickListener(this);
+            edtSelectBranch.setOnFocusChangeListener(this);
+            edtSelectBranch.setInputType(InputType.TYPE_NULL);
+
+
+            ctvNext.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int item) {
-                    if (items[item].equals("Camera")) {
-                        cameraIntent();
-
-                    } else if (items[item].equals("Gallery")) {
-                        galleryIntent();
-
+                public void onClick(View v) {
+                    clzName = edtCname.getText().toString().trim();
+                    clzCode = edtCCode.getText().toString().trim();
+                    if (TextUtils.isEmpty(clzName)) {
+                        ToastUtils.displayToast("Please enter college name", context);
+                        return;
                     }
+                    if (clzName.length() < 3) {
+                        ToastUtils.displayToast("College name minimum 3 char above", context);
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(clzCode)) {
+                        ToastUtils.displayToast("Please enter college code", context);
+                        return;
+                    }
+                    if (clzCode.length() < 3) {
+                        ToastUtils.displayToast("College code minimum 3 char above", context);
+                        return;
+                    }
+                    if (dialog.isShowing())
+                        dialog.dismiss();
+                    popupSubmitClzAddress(AdminFormActivity.this);
                 }
             });
-            builder.show();
+
+           /* if (dialog.isShowing())
+                dialog.dismiss();*/
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void cameraIntent() {
-        try {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, REQUEST_CAMERA);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    /* edtPassword = (EditText) findViewById(R.id.edt_password);
+            edtCnfPwd = (EditText) findViewById(R.id.edt_cnf_password);
+            edtAddress = (EditText) findViewById(R.id.edt_address);
+            edtCity = (EditText) findViewById(R.id.edt_city);
+            edtPinCode = (EditText) findViewById(R.id.edt_pincode);
 
-    private void galleryIntent() {
+            edtMobileNumber = (EditText) findViewById(R.id.edt_mobile);*/
+    private void popupSubmitClzAddress(final Context context) {
         try {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private void onSelectFromGalleryResult(Intent data) {
-        try {
-            if (data != null) {
-                try {
-                    bitmapUser = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                    Log.d(TAG, "Gallery Bitmap--" + bitmapUser);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            @SuppressLint("RestrictedApi") final Dialog dialog = new Dialog(new ContextThemeWrapper(context, R.style.Animation));
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup_college_address);
+            dialog.setTitle("Fill your College Details");
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_2;
             }
-            imgProfile.setImageBitmap(bitmapUser);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            dialog.show();
 
-    private void onCaptureImageResult(Intent data) {
-        try {
-            if (data != null && data.getExtras() != null && data.getExtras().get("data") != null) {
-                bitmapUser = (Bitmap) data.getExtras().get("data");
-                if (bitmapUser == null) {
-                    Log.d(TAG, "Camera Bitmap NULL");
-                    return;
+
+            final CustomEditTextMedium edtMobileNumber = (CustomEditTextMedium) dialog.findViewById(R.id.edt_mobile);
+            final CustomEditTextMedium edtEmail = (CustomEditTextMedium) dialog.findViewById(R.id.edt_email);
+            final CustomEditTextMedium edtPassword = (CustomEditTextMedium) dialog.findViewById(R.id.edt_password_address);
+            final CustomEditTextMedium edtCnfPwd = (CustomEditTextMedium) dialog.findViewById(R.id.edt_cnf_password_address);
+
+            final CustomEditTextMedium edtAddress = (CustomEditTextMedium) dialog.findViewById(R.id.edt_address);
+            final CustomEditTextMedium edtCity = (CustomEditTextMedium) dialog.findViewById(R.id.edt_city);
+
+            final CustomEditTextMedium edtPinCode = (CustomEditTextMedium) dialog.findViewById(R.id.edt_pincode);
+
+            CustomTextViewMedium ctvSave = (CustomTextViewMedium) dialog.findViewById(R.id.tv_save);
+
+            ctvSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    final String clzNumber = edtMobileNumber.getText().toString().trim();
+                    final String clzCity = edtCity.getText().toString().trim();
+                    final String clzAddress = edtAddress.getText().toString();
+                    final String clzPincode = edtPinCode.getText().toString().trim();
+                    String password = edtPassword.getText().toString().trim(), cnfpassword = edtCnfPwd.getText().toString().trim();
+                    if (TextUtils.isEmpty(clzNumber)) {
+                        ToastUtils.displayToast("Please enter Mobile number", AdminFormActivity.this);
+                        return;
+                    }
+                    if (clzNumber.length() != 10) {
+                        ToastUtils.displayToast("Please enter 10 digit Mobile number", AdminFormActivity.this);
+                        return;
+                    }
+                    if (!Utility.isValidEmail(edtEmail.getText().toString())) {
+                        ToastUtils.displayToast("Please enter valid email", AdminFormActivity.this);
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(password)) {
+                        ToastUtils.displayToast("Please enter Password", AdminFormActivity.this);
+                        return;
+                    }
+                    if (password.length() < 3) {
+                        ToastUtils.displayToast("Password minimum 3 char above", AdminFormActivity.this);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(cnfpassword)) {
+                        ToastUtils.displayToast("Please enter Confirm Password", AdminFormActivity.this);
+                        return;
+                    }
+
+                    if (!password.equals(cnfpassword)) {
+                        ToastUtils.displayToast("Password did not match", AdminFormActivity.this);
+                        edtPassword.setText("");
+                        edtCnfPwd.setText("");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(clzAddress)) {
+                        ToastUtils.displayToast("Please enter college address", AdminFormActivity.this);
+                        return;
+                    }
+                    if (clzAddress.length() < 3) {
+                        ToastUtils.displayToast("College address minimum 3 char above", AdminFormActivity.this);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(clzCity)) {
+                        ToastUtils.displayToast("Please enter college city", AdminFormActivity.this);
+                        return;
+                    }
+                    if (clzCity.length() < 3) {
+                        ToastUtils.displayToast("College city minimum 3 char above", AdminFormActivity.this);
+                        return;
+                    }
+                    if ((TextUtils.isEmpty(clzPincode))) {
+                        ToastUtils.displayToast("Please Enter Pincode ", AdminFormActivity.this);
+                        return;
+                    }
+                    if (clzPincode.length() != 6) {
+                        ToastUtils.displayToast("Please Enter Valid Pincode ", AdminFormActivity.this);
+                        return;
+                    }
+
+        /*{"message":{"name":"Muhilan","role_id":"1","email":"muhilan_admin@gmail.com","mobile":"1234567890","password":"123456",
+        "address":"Test","city":"Test","pincode":"560001","college_code":"Test001","university_id":1,"branch":"1,2,3,4"}}*/
+                    final HashMap<String, String> hashMap = new HashMap<String, String>();
+                    try {
+                        hashMap.put("name", clzName);
+                        hashMap.put("college_code", clzCode);
+                        hashMap.put("role_id", Constants.ADMIN_ROLE);
+                        hashMap.put("email", edtEmail.getText().toString().trim());
+                        hashMap.put("password", password);
+                        hashMap.put("address", clzAddress);
+                        hashMap.put("pincode", clzPincode);
+                        hashMap.put("university_id", unvId);
+                        hashMap.put("city", clzCity);
+                        hashMap.put("branch", "1,2,3,4,6,10,11");
+                        hashMap.put("mobile", clzNumber);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(TAG, "Admin Activity HASHAMP--" + hashMap);
+                    new APIRequest(AdminFormActivity.this).postStringRequest(ApiConstants.REGISTER, hashMap, new RequestCallBack() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d(TAG, "Admin Activity--" + response);
+                            Gson gson = new Gson();
+                            SuccessResponsePojo successResponsePojo = gson.fromJson(response, SuccessResponsePojo.class);
+                            if (successResponsePojo.getStatus().equals("1")) {
+                                ToastUtils.displayToast(successResponsePojo.getMessage(), AdminFormActivity.this);
+                              //  Utility.saveLoginID(AdminFormActivity.this, successResponsePojo.getUser_id());
+                                Utility.saveRole(AdminFormActivity.this, Constants.ADMIN_ROLE);
+                                Utility.saveLoginID(AdminFormActivity.this, successResponsePojo.getUser_id()); // saving user ID into pref
+                                Bundle b = new Bundle();
+                                b.putString("mode_of_login", "Admin");
+                                Intent i = new Intent(AdminFormActivity.this, AdminDashBoardActivity.class);
+                               // i.putExtras(b);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                ToastUtils.displayToast(successResponsePojo.getError(), AdminFormActivity.this);
+                            }
+                        }
+
+                        @Override
+                        public void onFailed(String message) {
+                            ToastUtils.displayToast(Constants.something_went_wrong, AdminFormActivity.this);
+                            Log.d(TAG, "Admin Error message--" + message + "--jon respons--" + hashMap);
+
+                        }
+                    });
                 }
-                imgProfile.setImageBitmap(bitmapUser);
-            } else
-                Log.d(TAG, "DATA NULL");
+            });
+
+          /*  if (dialog.isShowing())
+                dialog.dismiss();*/
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

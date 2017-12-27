@@ -9,21 +9,31 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import org.com.classmate.APIS.APIRequest;
 import org.com.classmate.R;
 import org.com.classmate.adapter.TodaySubjectsAdapter;
+import org.com.classmate.interfaces.ShowTimetable;
+import org.com.classmate.model.showTimetable.ShowTimetableDetails;
+import org.com.classmate.model.showTimetable.TimeTable;
+import org.com.classmate.utils.Logger;
+import org.com.classmate.utils.ToastUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class LessonActivity extends AppCompatActivity {
+import java.util.List;
+
+public class LessonActivity extends AppCompatActivity implements ShowTimetable {
+
+    RecyclerView rcvSubjectsList;
+    TodaySubjectsAdapter subjectsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson);
-
         initToolBar();
-        RecyclerView rcvSubjectsList = (RecyclerView) findViewById(R.id.rcv_subjects);
-        TodaySubjectsAdapter subjectsAdapter = new TodaySubjectsAdapter(LessonActivity.this);
-        rcvSubjectsList.setLayoutManager(new LinearLayoutManager(this));
-        rcvSubjectsList.setAdapter(subjectsAdapter);
+        APIRequest.showTimeTable(LessonActivity.this, "2", "1", LessonActivity.this);
+        rcvSubjectsList = (RecyclerView) findViewById(R.id.rcv_subjects);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,5 +49,15 @@ public class LessonActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle("Today Subjects");
+    }
+
+    @Override
+    public void showTimeTableDetails(ShowTimetableDetails result) {
+        Logger.logV("the result is", "the result is" + result);
+        List<TimeTable> timeTable = result.getTimeTable();
+        subjectsAdapter = new TodaySubjectsAdapter(LessonActivity.this, timeTable);
+        rcvSubjectsList.setLayoutManager(new LinearLayoutManager(this));
+        rcvSubjectsList.setAdapter(subjectsAdapter);
+
     }
 }

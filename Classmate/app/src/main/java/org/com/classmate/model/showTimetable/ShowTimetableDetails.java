@@ -1,6 +1,7 @@
 
 package org.com.classmate.model.showTimetable;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -15,7 +16,7 @@ public class ShowTimetableDetails {
     private String message;
     @SerializedName("timeTable")
     @Expose
-    private List<TimeTable> timeTable = null;
+    private List<TimeTable> timeTable = new ArrayList<>();
 
     public String getStatus() {
         return status;

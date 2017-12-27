@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.com.classmate.APIS.APIRequest;
@@ -31,6 +32,7 @@ import org.com.classmate.R;
 import org.com.classmate.adapter.TeacherAttendanceAdapter;
 import org.com.classmate.model.BranchList;
 import org.com.classmate.model.LoginResponseModel.LoginResponsePojo;
+import org.com.classmate.model.ResponseModel;
 import org.com.classmate.model.students.StudentsList.GetStudentsListPojo;
 import org.com.classmate.model.students.StudentsList.StudentList;
 import org.com.classmate.model.teacher.teacher_attendance_module.AttendanceReport;
@@ -81,7 +83,6 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Attendance");
-
         spYear = (Spinner) findViewById(R.id.sp_choose_years);
         spSem = (Spinner) findViewById(R.id.sp_choose_semi);
         edtAttendanceDate = (CustomEditTextMedium) findViewById(R.id.edt_attendanceDate);
@@ -89,16 +90,12 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
         edtBranch.setOnClickListener(this);
         edtBranch.setOnFocusChangeListener(this);
         edtBranch.setInputType(InputType.TYPE_NULL);
-
         btnGetStudentList = (Button) findViewById(R.id.btn_getStudents);
         btnGetStudentList.setOnClickListener(this);
-
         rcvStudentsList = (RecyclerView) findViewById(R.id.rcv_students_attendance);
         btnSelectedRg = (Button) findViewById(R.id.btn_submit_attendance);
-
         btnSelectedRg.setOnClickListener(this);
         btnSelectedRg.setVisibility(View.GONE);
-
         edtAttendanceDate.setOnClickListener(this);
         edtAttendanceDate.setOnFocusChangeListener(this);
         edtAttendanceDate.setInputType(InputType.TYPE_NULL);
@@ -216,26 +213,19 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
         submitAttendancePojo.setTeacherId(String.valueOf(Utility.getUserID(TeacherAttendanceActivity.this)));
         submitAttendancePojo.setAttendanceDate(edtAttendanceDate.getText().toString());
         submitAttendancePojo.setAttendanceReport(list);
-        Gson gson = new Gson();
+        Gson userGson = new Gson();
         Type type = new TypeToken<List<AttendanceReport>>() {
         }.getType();
-        String attendanceResponse = gson.toJson(list, type);
+        String attendanceResponse = userGson.toJson(list, type);
         Log.d(TAG, "Attendance Response--" + attendanceResponse);
-
         final HashMap<String, String> hashMap = new HashMap<String, String>();
         try {
-            /*"teacher_id": "2",
-    "branch_id": "2",
-    "year": "1",
-    "semester": "2",
-    "attendance_date": "2017-09-30",
-  */
             hashMap.put("teacher_id", String.valueOf(Utility.getUserID(TeacherAttendanceActivity.this)));
             hashMap.put("year", yearValue);
             hashMap.put("semester", semValues);
             hashMap.put("attendance_date", edtAttendanceDate.getText().toString().trim());
             hashMap.put("branch_id", branchId);
-            hashMap.put("attendance_report", attendanceResponse);
+            hashMap.put("attendance_report", attendanceResponse/*.replace("\"", "")*/);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -243,28 +233,23 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
         new APIRequest(this).postStringRequest(ApiConstants.SUBMIT_ATTENDANCE, hashMap, new RequestCallBack() {
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Login Activity--" + response);
+                Log.d(TAG, "Attendance Submit Response--" + response);
                 Gson gson = new Gson();
-                LoginResponsePojo successResponsePojo = gson.fromJson(response, LoginResponsePojo.class);
-               /* if (successResponsePojo.getMessage().equalsIgnoreCase("success")) {
-                    ToastUtils.displayToast(successResponsePojo.getMessage(), LoginActivity.this);
-                    Utility.saveUserID(LoginActivity.this, successResponsePojo.getId()); // saving user ID into pref
-                    moveToDashboard(selectionMode);
-
+                ResponseModel successResponsePojo = gson.fromJson(response, ResponseModel.class);
+                if (1 == successResponsePojo.getStatus()) {
+                    ToastUtils.displayToast(successResponsePojo.getMessage(), TeacherAttendanceActivity.this);
+                    finish();
                 } else {
-                    ToastUtils.displayToast(successResponsePojo.getMessage(), LoginActivity.this);
-                }*/
-
+                    ToastUtils.displayToast(successResponsePojo.getMessage(), TeacherAttendanceActivity.this);
+                }
             }
 
             @Override
             public void onFailed(String message) {
                 ToastUtils.displayToast(Constants.something_went_wrong, TeacherAttendanceActivity.this);
                 Log.d(TAG, "TeacherAttendanceActivity Error message--" + message + "--jon respons--" + hashMap);
-
             }
         });
-
     }
 
     private void getBranchFromPref() {
@@ -325,6 +310,5 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements View
             default:
                 break;
         }
-
     }
 }

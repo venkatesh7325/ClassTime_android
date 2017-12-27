@@ -67,21 +67,20 @@ public class IntroductionActivity extends AppCompatActivity {
     int currentPage = 0;
     int numPages = 0;
     private String TAG = "IntroductionActivity";
-    @Bind(R.id.btn_signup)
-    Button signUp;
-    @Bind(R.id.btn_signin)
-    LinearLayout signIn;
-    String logOrReg;
+    @Bind(R.id.btn_start)
+    Button signStart;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_introduction_screen);
         ButterKnife.bind(IntroductionActivity.this);
         callUnvAndBranchApis(); // get Unv and Branch list
-        DynamicCustomButtons.setbuttonFontSemiBold(signUp, this);
+        DynamicCustomButtons.setbuttonFontSemiBold(signStart, this);
         init();
-        ButtonAnimation buttonAnimation = new ButtonAnimation();
-        buttonAnimation.startAnimation(this, signUp);
     }
 
     void callUnvAndBranchApis() {
@@ -104,130 +103,13 @@ public class IntroductionActivity extends AppCompatActivity {
         setUpIndicator(vPager);
     }
 
-    @OnClick(R.id.btn_signup)
+    @OnClick(R.id.btn_start)
     public void onClickSignUp() {
-        logOrReg = "Sign up";
-        popupToShowModeOfLogin();
-    }
-
-    @OnClick(R.id.btn_signin)
-    public void onClickSignIn() {
-        logOrReg = getResources().getString(R.string.sign_in);
-        popupToShowModeOfLogin();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(IntroductionActivity.this, ChooseRoleActivity.class));
         finish();
     }
 
 
-    void popupToShowModeOfLogin() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.login_reg_mode_popup);
-        dialogFullWidth(dialog);
-        dialog.show();
-        TextView okayTv = (TextView) dialog.findViewById(R.id.okay);
-        TextView cancelTv = (TextView) dialog.findViewById(R.id.cancel);
-        CustomTextViewRegular title = (CustomTextViewRegular) dialog.findViewById(R.id.tv_popup_title);
-        title.setText(logOrReg.concat(" as"));
-        final RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.rg_login_modes);
-        okayTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-                if (selectedId == -1) {
-                    Toast.makeText(IntroductionActivity.this, "Choose your Role for login or registration ", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (logOrReg.equalsIgnoreCase(getResources().getString(R.string.sign_in))) {
-                    Log.d(TAG, "Selected mode--" + returnSelection(radioGroup));
-                    Bundle b = new Bundle();
-                    b.putString("mode_of_login", returnSelection(radioGroup));
-                    Intent i = new Intent(IntroductionActivity.this, LoginActivity.class);
-                    i.putExtras(b);
-                    startActivity(i);
-                } else {
-                    getSelectedLoginMode(radioGroup, selectedId);
-                }
-                dialog.dismiss();
-            }
-        });
-
-
-        cancelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-    }
-
-    void dialogFullWidth(Dialog dialog) {
-        //Grab the window of the dialog, and change the width
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        Window window = dialog.getWindow();
-        lp.copyFrom(window.getAttributes());
-        //This makes the dialog take up the full width
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-    }
-
-    void getSelectedLoginMode(RadioGroup radioGroup, int checkedId) {
-        if (checkedId == -1) {
-            Toast.makeText(this, "Choose your Role for login or registration ", Toast.LENGTH_SHORT).show();
-        } else {
-            navigateToNextScreen(checkedId, returnSelection(radioGroup));
-        }
-    }
-
-    private String returnSelection(RadioGroup radioGroup) {
-        String selection = "";
-        try {
-            int id = radioGroup.getCheckedRadioButtonId();
-            View radioButton = radioGroup.findViewById(id);
-            int radioId = radioGroup.indexOfChild(radioButton);
-            RadioButton btn = (RadioButton) radioGroup.getChildAt(radioId);
-            if (btn != null && btn.getText() != null) {
-                selection = (String) btn.getText();
-                Log.d(TAG, "Selected mode--" + selection);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return selection;
-    }
-
-    void navigateToNextScreen(int id, String selectedRb) {
-        Intent i = null;
-        Log.d(TAG, "Selected mode--" + selectedRb);
-        Bundle b = new Bundle();
-        b.putString("mode_of_login", selectedRb);
-        switch (id) {
-            case R.id.rb_admin:
-                i = new Intent(this, AdminFormActivity.class);
-                i.putExtras(b);
-                break;
-            case R.id.rb_hod:
-                i = new Intent(this, HodFormActivity.class);
-                i.putExtras(b);
-                break;
-            case R.id.rb_faculty:
-                i = new Intent(this, HodFormActivity.class);
-                i.putExtras(b);
-                break;
-            case R.id.rb_student:
-                i = new Intent(this, StudentFormActivity.class);
-                i.putExtras(b);
-                break;
-        }
-        if (null != i)
-            startActivity(i);
-
-    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -273,8 +155,11 @@ public class IntroductionActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 currentPage = position;
-                ButtonAnimation buttonAnimation = new ButtonAnimation();
-                buttonAnimation.startAnimation(IntroductionActivity.this, signUp);
+                if(position==2){
+                    signStart.setVisibility(View.VISIBLE);
+                }else{
+                    signStart.setVisibility(View.GONE);
+                }
             }
 
             @Override

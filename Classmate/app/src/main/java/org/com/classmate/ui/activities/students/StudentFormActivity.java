@@ -1,18 +1,21 @@
 package org.com.classmate.ui.activities.students;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +26,6 @@ import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.com.classmate.APIS.APIRequest;
 import org.com.classmate.APIS.RequestCallBack;
@@ -31,19 +33,14 @@ import org.com.classmate.R;
 import org.com.classmate.model.BranchList;
 import org.com.classmate.model.GetClz.GetDetailsFromClzRegId.GetCollegeIDPojo;
 import org.com.classmate.model.SuccessResponsePojo;
-import org.com.classmate.model.admin.AdminDetails;
-import org.com.classmate.model.common.Branches;
-import org.com.classmate.ui.activities.common.LoginActivity;
-import org.com.classmate.ui.activities.hod.HodFormActivity;
+import org.com.classmate.ui.activities.admin.AdminFormActivity;
 import org.com.classmate.utils.ApiConstants;
 import org.com.classmate.utils.Constants;
-import org.com.classmate.utils.FileUtils;
 import org.com.classmate.utils.ToastUtils;
 import org.com.classmate.utils.Utility;
 import org.com.classmate.utils.customfonts.CustomEditTextMedium;
 import org.com.classmate.utils.customfonts.CustomTextViewMedium;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +48,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StudentFormActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
-    CustomTextViewMedium edtCvcode;
     CustomEditTextMedium edtStudentRollNumber;
     CustomEditTextMedium edtStudentFirstName;
     CustomEditTextMedium edtStudentLastName;
@@ -59,44 +55,40 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
     CustomEditTextMedium edtStudentMobile;
     CustomEditTextMedium edtStudentPassWord;
     CustomEditTextMedium edtStudentConfrmPassWord;
-    CustomEditTextMedium edtStudentAddress;
-    CustomEditTextMedium edtStudentCity;
     Spinner spYear;
     Spinner spSemester;
-    Spinner spBranch;
     RadioGroup radioGroupStntGender;
-    Button btnSaveStudentDetails;
     CustomEditTextMedium edtBranch;
     private String TAG = "Student registration";
     List<BranchList> branchListsFromPref = null;
     private String branchId = "";
     String institutionID = "";
-    private static final int SELECT_FILE = 101;
-    private static final int REQUEST_CAMERA = 102;
-    Bitmap bitmapUser;
-    private CircularImageView imgProfile;
+    Button btnProceed;
+    CustomEditTextMedium edtCode, edtSelectBranch;
+    String clzCode = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_student_form);
         Utility.hideKeyBoard(this);// hide key board while lunching APP
         getBranchFromPref();
-        setToolBar();
         initBinds();
     }
 
-    void setToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Student Registration");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.app_white_buttons_bg_color));
-    }
 
     void initBinds() {
-        imgProfile = (CircularImageView) findViewById(R.id.img_profile);
-        imgProfile.setOnClickListener(this);
-        edtCvcode = (CustomTextViewMedium) findViewById(R.id.edt_cvcode);
+
+        btnProceed = (Button) findViewById(R.id.btn_proceed);
+        btnProceed.setOnClickListener(this);
+        edtCode = (CustomEditTextMedium) findViewById(R.id.edt_code);
+
+        /*imgProfile = (CircularImageView) findViewById(R.id.img_profile);
+        imgProfile.setOnClickListener(this);*/
+       /* edtCvcode = (CustomTextViewMedium) findViewById(R.id.edt_cvcode);
         edtCvcode.setOnClickListener(this);
         edtStudentRollNumber = (CustomEditTextMedium) findViewById(R.id.edt_student_rollnumber);
         edtStudentFirstName = (CustomEditTextMedium) findViewById(R.id.edt_student_fname);
@@ -115,7 +107,7 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
         edtBranch.setInputType(InputType.TYPE_NULL);
         radioGroupStntGender = (RadioGroup) findViewById(R.id.rg_student_gender);
         btnSaveStudentDetails = (Button) findViewById(R.id.btn_student_save);
-        btnSaveStudentDetails.setOnClickListener(this);
+        btnSaveStudentDetails.setOnClickListener(this);*/
     }
 
     void showAlertDialog() {
@@ -157,7 +149,7 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    void callAPIToGetCollegeDetails(String whichApi, String postKey, final String postValues) {
+    void callAPIToGetCollegeDetails(String whichApi, final String postKey, final String postValues) {
         try {
             HashMap<String, String> map = new HashMap<>();
             map.put(postKey, postValues);
@@ -172,18 +164,10 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
                         return;
 
                     if (getCollegeIDPojo.getMessage().equals("success")) {
-                        ToastUtils.displayToast(getCollegeIDPojo.getCollegeDetails().getInstitutionName(), StudentFormActivity.this);
-                        edtCvcode.setText(postValues);
+                        clzCode = postValues;
                         institutionID = String.valueOf(getCollegeIDPojo.getCollegeDetails().getInstitutionId());
                         branchId = String.valueOf(getCollegeIDPojo.getCollegeDetails().getBranchId());
-                        if (branchListsFromPref == null)
-                            return;
-                        for (int i = 0; i < branchListsFromPref.size(); i++) {
-                            if (branchId.equals(String.valueOf(branchListsFromPref.get(i).getBranchId()))) {
-                                edtBranch.setText(branchListsFromPref.get(i).getBranchName());
-                            }
-                        }
-                        Log.d(TAG, "Branch ID--" + getCollegeIDPojo.getCollegeDetails().getBranchId());
+                        showCollegeDetailsToHod(getCollegeIDPojo.getCollegeDetails().getInstitutionName() + "(" + edtCode.getText().toString().trim() + ")", String.valueOf(getCollegeIDPojo.getCollegeDetails().getBranchId()));
                     } else {
                         ToastUtils.displayToast("Please enter valid code", StudentFormActivity.this);
                     }
@@ -202,16 +186,46 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void doRegistration() {
+
+    void showCollegeDetailsToHod(final String message, final String bID) {
+        try {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            builder.setTitle("Check below college details : ");
+            builder.setMessage(message.toUpperCase());
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    popupSubmitClzDetails(StudentFormActivity.this, bID);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            if (alertDialog.getWindow() != null) {
+                alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_2;
+                alertDialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+   /* private void doRegistration() {
 
         String stFirstName = edtStudentFirstName.getText().toString().trim();
         String stLastName = edtStudentLastName.getText().toString().trim();
         String code = edtCvcode.getText().toString().trim();
         String studentRollNumber = edtStudentRollNumber.getText().toString().trim();
         String stEmail = edtStudentEmail.getText().toString().trim();
-        String stCity = edtStudentCity.getText().toString().trim();
-        String stAdd = edtStudentAddress.getText().toString().trim();
         String stMobile = edtStudentMobile.getText().toString();
+
         if (TextUtils.isEmpty(code)) {
             ToastUtils.displayToast("Please enter HOD code", this);
             return;
@@ -289,10 +303,10 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
-/*{ "name": "Christ Student","roll_number":"9999999999", "email": "christ_student@gmail.com",
+*//*{ "name": "Christ Student","roll_number":"9999999999", "email": "christ_student@gmail.com",
 "gender_id":"1", "password": "123456", "branch_id": "1", "address": "address",
  "city": "city", "code": "CRITHD5", "role_id": "4", "batch_id": "1",
- "qualification": "BE", "mobile": "7878787877", "institution_id":"1" }*/
+ "qualification": "BE", "mobile": "7878787877", "institution_id":"1" }*//*
 
         final HashMap<String, String> jsonObject = new HashMap<String, String>();
         try {
@@ -318,8 +332,8 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
         Log.d(TAG, "Hash Map aprams--" + jsonObject);
-        /*Intent intent = new Intent(this, StudentDayActivity.class);
-        startActivity(intent);*/
+        *//*Intent intent = new Intent(this, StudentDayActivity.class);
+        startActivity(intent);*//*
         new APIRequest(this).postStringRequest(ApiConstants.REGISTER, jsonObject, new RequestCallBack() {
             @Override
             public void onResponse(String jsonObject) {
@@ -329,8 +343,7 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
                 SuccessResponsePojo successResponsePojo = gson.fromJson(jsonObject, SuccessResponsePojo.class);
                 if (successResponsePojo.getStatus().equals("1")) {
                     ToastUtils.displayToast(successResponsePojo.getMessage(), StudentFormActivity.this);
-                    //  Utility.saveUserID(AdminFormActivity.this, successResponsePojo.getId()); // saving user ID into pref
-                    saveImageIntoSdCard();
+                    Utility.saveUserID(StudentFormActivity.this, successResponsePojo.getUser_id()); // saving user ID into pref
                     Bundle b = new Bundle();
                     b.putString("mode_of_login", "Student");
                     Intent i = new Intent(StudentFormActivity.this, LoginActivity.class);
@@ -349,7 +362,7 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
 
             }
         });
-    }
+    }*/
 
     private String returnSelection(RadioGroup radioGroup) {
         int id = radioGroup.getCheckedRadioButtonId();
@@ -369,14 +382,16 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.img_profile:
-                selectImage();
-                break;
-            case R.id.btn_student_save:
-                doRegistration();
-                break;
-            case R.id.edt_cvcode:
-                showAlertDialog();
+            case R.id.btn_proceed:
+                String code = edtCode.getText().toString().trim();
+                if (code.isEmpty()) {
+                    ToastUtils.displayToast("Please enter code", StudentFormActivity.this);
+                    return;
+                }
+                if (Utility.isConnectingToInternet(StudentFormActivity.this))
+                    callAPIToGetCollegeDetails(ApiConstants.GET_COLLEGE_DETAILS_TEACHER, "hod_code", code.toUpperCase());
+                else
+                    ToastUtils.displayToast(Constants.no_internet_connection, StudentFormActivity.this);
                 break;
             default:
                 break;
@@ -393,7 +408,7 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadBranchAndSelect() {
-        /*InputMethodManager imm = (InputMethodManager) HodFormActivity.this.getSystemService(INPUT_METHOD_SERVICE);
+        /*InputMethodManager imm = (InputMethodManager) StudentFormActivity.this.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edtBranch.getWindowToken(), 0);*/
         List<String> branchNameList = new ArrayList<>();
         for (int i = 0; i < branchListsFromPref.size(); i++) {
@@ -431,106 +446,206 @@ public class StudentFormActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void selectImage() { //Choose option to capture image from camera or gallery
+
+    private void popupSubmitClzDetails(final Context context, final String bId) {
         try {
-            final CharSequence[] items = {"Camera", "Gallery"};
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Add Photo!");
-            builder.setItems(items, new DialogInterface.OnClickListener() {
+            @SuppressLint("RestrictedApi") final Dialog dialog = new Dialog(context);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup_student_details);
+            dialog.setTitle("Fill your Details");
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_2;
+            }
+            dialog.show();
+
+            edtStudentRollNumber = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_rollnumber);
+            edtStudentFirstName = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_fname);
+            edtStudentLastName = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_lname);
+            edtStudentEmail = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_email);
+            edtStudentMobile = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_mobile);
+            edtStudentPassWord = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_password);
+            edtStudentConfrmPassWord = (CustomEditTextMedium) dialog.findViewById(R.id.edt_student_cnf_password);
+            edtSelectBranch = (CustomEditTextMedium) dialog.findViewById(R.id.edt_select_branch);
+            radioGroupStntGender = (RadioGroup) dialog.findViewById(R.id.rg_student_gender);
+            spYear = (Spinner) dialog.findViewById(R.id.sp_choose_years);
+            spSemester = (Spinner) dialog.findViewById(R.id.sp_choose_semi);
+
+            edtSelectBranch.setOnClickListener(this);
+            edtSelectBranch.setOnFocusChangeListener(this);
+            edtSelectBranch.setInputType(InputType.TYPE_NULL);
+            CustomTextViewMedium ctvSave = (CustomTextViewMedium) dialog.findViewById(R.id.tv_save);
+
+            if (branchListsFromPref == null)
+                return;
+            for (int i = 0; i < branchListsFromPref.size(); i++) {
+                if (branchId.equals(String.valueOf(branchListsFromPref.get(i).getBranchId()))) {
+                    edtSelectBranch.setText(branchListsFromPref.get(i).getBranchName());
+                }
+            }
+            ctvSave.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int item) {
-                    if (items[item].equals("Camera")) {
-                        cameraIntent();
+                public void onClick(View v) {
+                    String stFirstName = edtStudentFirstName.getText().toString().trim();
+                    String stLastName = edtStudentLastName.getText().toString().trim();
+                    String studentRollNumber = edtStudentRollNumber.getText().toString().trim();
+                    String stEmail = edtStudentEmail.getText().toString().trim();
+                    String stMobile = edtStudentMobile.getText().toString();
 
-                    } else if (items[item].equals("Gallery")) {
-                        galleryIntent();
 
+                    if (TextUtils.isEmpty(studentRollNumber)) {
+                        ToastUtils.displayToast("Please enter your RollNumber", context);
+                        return;
                     }
+                    if (studentRollNumber.length() <= 6) {
+                        ToastUtils.displayToast("Student Roll number minimum 6 char above", StudentFormActivity.this);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(stFirstName)) {
+                        ToastUtils.displayToast("Please enter first name", StudentFormActivity.this);
+                        return;
+                    }
+                    if (stFirstName.length() < 3) {
+                        ToastUtils.displayToast("First name minimum 3 char above", StudentFormActivity.this);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(stLastName)) {
+                        ToastUtils.displayToast("Please enter last name", StudentFormActivity.this);
+                        return;
+                    }
+                    if (!Utility.isValidEmail(stEmail)) {
+                        ToastUtils.displayToast("Please enter valid email", StudentFormActivity.this);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(stMobile)) {
+                        ToastUtils.displayToast("Please enter Mobile number", StudentFormActivity.this);
+                        return;
+                    }
+                    if (stMobile.length() != 10) {
+                        ToastUtils.displayToast("Please enter 10 digit Mobile number", StudentFormActivity.this);
+                        return;
+                    }
+                    if (returnSelection(radioGroupStntGender).isEmpty()) {
+                        ToastUtils.displayToast("Please select gender", StudentFormActivity.this);
+                        return;
+                    }
+                    if (getResources().getString(R.string.Spiner_year_prompt).equalsIgnoreCase(spYear.getSelectedItem().toString())) {
+                        ToastUtils.displayToast("Please select year", StudentFormActivity.this);
+                        return;
+                    }
+                    if (getResources().getString(R.string.Spiner_semi_prompt).equalsIgnoreCase(spSemester.getSelectedItem().toString())) {
+                        ToastUtils.displayToast("Please select semester", StudentFormActivity.this);
+                        return;
+                    }
+
+                    String password = edtStudentPassWord.getText().toString().trim(), cnfpassword = edtStudentConfrmPassWord.getText().toString().trim();
+                    if (TextUtils.isEmpty(password)) {
+                        ToastUtils.displayToast("Please enter Password", StudentFormActivity.this);
+                        return;
+                    }
+                    if (password.length() < 6) {
+                        ToastUtils.displayToast("Password minimum 6 char above", StudentFormActivity.this);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(cnfpassword)) {
+                        ToastUtils.displayToast("Please enter Confirm Password", StudentFormActivity.this);
+                        return;
+                    }
+
+                    if (!password.equals(cnfpassword)) {
+                        ToastUtils.displayToast("password did not match", StudentFormActivity.this);
+                        return;
+                    }
+                    final HashMap<String, String> jsonObject = new HashMap<String, String>();
+                    try {
+                        jsonObject.put("name", stFirstName);
+                        jsonObject.put("roll_number", studentRollNumber);
+                        jsonObject.put("code", clzCode);
+                        jsonObject.put("role_id", Constants.STUDENT_ROLE);
+                        jsonObject.put("email", stEmail);
+                        jsonObject.put("password", password);
+                        jsonObject.put("address", "NA");
+                        jsonObject.put("city", "NA");
+                        jsonObject.put("branch_id", branchId);
+                        jsonObject.put("institution_id", institutionID);
+                        jsonObject.put("qualification", "");
+                        jsonObject.put("mobile", stMobile);
+                        jsonObject.put("gender_id", returnSelection(radioGroupStntGender));
+                        //"current_year": "2017", "year": "1", "semester": "1"
+                        Calendar cal = Calendar.getInstance();
+                        jsonObject.put("current_year", String.valueOf(cal.get(Calendar.YEAR)));
+                        jsonObject.put("year", Constants.getYearId(spYear.getSelectedItem().toString()));
+                        jsonObject.put("semester", Constants.getYearId(spSemester.getSelectedItem().toString()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(TAG, "Hash Map aprams--" + jsonObject);
+
+                    new APIRequest(StudentFormActivity.this).postStringRequest(ApiConstants.REGISTER, jsonObject, new RequestCallBack() {
+                        @Override
+                        public void onResponse(String jsonObject) {
+                            ToastUtils.displayToast(jsonObject, StudentFormActivity.this);
+                            Log.d(TAG, "Student Activity--" + jsonObject);
+                            Gson gson = new Gson();
+                            SuccessResponsePojo successResponsePojo = gson.fromJson(jsonObject, SuccessResponsePojo.class);
+                            if (successResponsePojo.getStatus().equals("1")) {
+                                ToastUtils.displayToast(successResponsePojo.getMessage(), StudentFormActivity.this);
+                                Utility.saveRole(StudentFormActivity.this, Constants.STUDENT_ROLE);
+                                Utility.saveLoginID(StudentFormActivity.this, successResponsePojo.getUser_id()); // saving user ID into pref
+                                if (dialog.isShowing())
+                                    dialog.dismiss();
+                                Bundle b = new Bundle();
+                                b.putString("mode_of_login", "Student");
+                                Intent i = new Intent(StudentFormActivity.this, StudentDashBoardActivity.class);
+                                //  i.putExtras(b);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                ToastUtils.displayToast(successResponsePojo.getError(), StudentFormActivity.this);
+                            }
+                        }
+
+                        @Override
+                        public void onFailed(String message) {
+                            ToastUtils.displayToast(Constants.something_went_wrong, StudentFormActivity.this);
+                            Log.d(TAG, "Student Error message--" + message + "--jon respons--" + jsonObject);
+
+                        }
+                    });
+
+                 /*   new APIRequest(StudentFormActivity.this).postStringRequest(ApiConstants.REGISTER, jsonObject, new RequestCallBack() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d(TAG, "HOD Activity--" + response);
+                            Gson gson = new Gson();
+                            SuccessResponsePojo successResponsePojo = gson.fromJson(response, SuccessResponsePojo.class);
+                            if (successResponsePojo.getStatus().equals("1")) {
+                                ToastUtils.displayToast(successResponsePojo.getMessage(), StudentFormActivity.this);
+                                Utility.saveUserID(StudentFormActivity.this, successResponsePojo.getUser_id()); // saving user ID into pref
+                                Bundle b = new Bundle();
+                                b.putString("mode_of_login", selectionMode);
+                                Intent i = new Intent(StudentFormActivity.this, TeachersDashboardActivity.class);
+                                i.putExtras(b);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                ToastUtils.displayToast(successResponsePojo.getMessage(), StudentFormActivity.this);
+                            }
+                        }
+
+                        @Override
+                        public void onFailed(String message) {
+                            ToastUtils.displayToast(Constants.something_went_wrong, StudentFormActivity.this);
+                            Log.d(TAG, "HOD Error message--" + message + "--jon respons--" + jsonObject);
+
+                        }
+                    });
+
+                    if (dialog.isShowing())
+                        dialog.dismiss();
+*/
                 }
             });
-            builder.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void cameraIntent() {
-        try {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, REQUEST_CAMERA);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void galleryIntent() {
-        try {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private void onSelectFromGalleryResult(Intent data) {
-        try {
-            if (data != null) {
-                try {
-                    bitmapUser = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                    Log.d(TAG, "Gallery Bitmap--" + bitmapUser);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            imgProfile.setImageBitmap(bitmapUser);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void onCaptureImageResult(Intent data) {
-        try {
-            if (data != null && data.getExtras() != null && data.getExtras().get("data") != null) {
-                bitmapUser = (Bitmap) data.getExtras().get("data");
-                if (bitmapUser == null) {
-                    Log.d(TAG, "Camera Bitmap NULL");
-                    return;
-                }
-                imgProfile.setImageBitmap(bitmapUser);
-            } else
-                Log.d(TAG, "DATA NULL");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    void saveImageIntoSdCard() {
-        try {
-            if (bitmapUser == null) {
-                Log.d(TAG, "Camera Bitmap NULL");
-                return;
-            }
-            boolean imgSaveFlag = FileUtils.saveImageIntoSdcard(StudentFormActivity.this, bitmapUser, getResources().getString(R.string.app_name) + "_" + Utility.getUserID(StudentFormActivity.this) + ".jpg");
-            Log.d(TAG, "Camera Bitmap--" + imgSaveFlag);
-            if (imgSaveFlag)
-                imgProfile.setImageBitmap(bitmapUser);
-            else
-                ToastUtils.displayToast("Image not saved in SD CARD", StudentFormActivity.this);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

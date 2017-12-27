@@ -1,5 +1,13 @@
 package org.com.classmate.utils;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+
+import org.com.classmate.R;
+import org.com.classmate.ui.activities.common.LoginActivity;
+
 /**
  * Created by hp  pc on 13-05-2017.
  */
@@ -8,13 +16,37 @@ public class Constants {
 
     public static final String CLASSTIME_PREF = "ADMIN_PREF";
     public static final String MAIN_URL = "";
-    public static final String no_internet_connection = "No Internet";
+    public static final String no_internet_connection = "Please check your connection and try again.";
     public static final String something_went_wrong = "Some thing went wrong";
     public static final String LOGIN_VERIFIED = "login_verify";
     public static final String ADMIN_ROLE = "1";
     public static final String HOD_ROLE = "2";
     public static final String TEACHER_ROLE = "3";
     public static final String STUDENT_ROLE = "4";
+
+    public static void popupToLogOut(final Activity activity) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        alertDialog.setTitle("Logout");
+        alertDialog.setMessage("Are you sure want to logout?");
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Utility.clearPref(activity);
+                activity.startActivity(new Intent(activity, LoginActivity.class));
+                activity.finish();
+            }
+        });
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alertDialog1 = alertDialog.create();
+        if (alertDialog1.getWindow() != null && alertDialog1.getWindow().getAttributes() != null)
+            alertDialog1.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_2;
+
+        alertDialog1.show();
+    }
 
    /* public static String getYearId(String year) {
         String yearID = "";

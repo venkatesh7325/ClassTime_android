@@ -19,7 +19,6 @@
                 android:id="@+id/tv_clz_verification_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PCEE"
                 android:textColor="@color/app_black_buttons_bg_color"
                 android:textSize="@dimen/app_twenty_sp" />
         </RelativeLayout>
@@ -34,7 +33,6 @@
                 android:id="@+id/tv_clz_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Adarsh College of Engineering(ACEE)"
                 android:textColor="@color/app_black_buttons_bg_color"
                 android:textSize="@dimen/app_twenty_sp" />
         </RelativeLayout>

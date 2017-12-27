@@ -60,26 +60,31 @@ public class TimeTableAdapter extends BaseAdapter{
         View viewLine = (View) grid.findViewById(R.id.hriLine);
 
         if (list.get(position).getEnable().equals("text")) {
-            viewBg.setVisibility(View.INVISIBLE);
+            viewBg.setVisibility(View.VISIBLE);
             viewLine.setVisibility(View.INVISIBLE);
             textView.setVisibility(View.VISIBLE);
+            viewBg.setBackground(mContext.getResources().getDrawable(R.drawable.view_round_cyan));
+            textView.setTextColor(Color.WHITE);
         } else {
-            viewBg.setVisibility(View.VISIBLE);
+            viewBg.setVisibility(View.INVISIBLE);
             viewLine.setVisibility(View.VISIBLE);
             textView.setVisibility(View.INVISIBLE);
         }
         textView.setText(list.get(position).getValue());
         if (position > 0 && position < 7) {
             textView.setTypeface(null, Typeface.BOLD);
-            textView.setTextColor(Color.parseColor("#646464"));
+            textView.setTextColor(Color.BLACK);
+            viewBg.setVisibility(View.INVISIBLE);
+            //textView.setTextColor(Color.parseColor("#646464"));
         } else {
-            textView.setTextColor(Color.parseColor("#C4C5C8"));
+            textView.setTextColor(Color.WHITE);
+            viewBg.setVisibility(View.VISIBLE);
+            //textView.setTextColor(Color.parseColor("#C4C5C8"));
         }
-        textView.setTextColor(Color.WHITE);
-        viewBg.setBackground(mContext.getResources().getDrawable(R.drawable.view_round_gray));
+       /* viewBg.setBackground(mContext.getResources().getDrawable(R.drawable.view_round_gray));
         viewBg.setBackground(list.get(position).getSlected().equals("true") ?
                 mContext.getResources().getDrawable(R.drawable.view_round_cyan) :
-                mContext.getResources().getDrawable(R.drawable.view_round_gray));
+                mContext.getResources().getDrawable(R.drawable.view_round_gray));*/
         viewBg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
             android:padding="@dimen/fivedp"
             android:src="@drawable/close_delete" />
     </RelativeLayout>
+
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
@@ -37,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:background="@color/blue"
         android:text="Save"
-        android:textColor="@color/app_white_buttons_bg_color" />
+        android:textColor="@color/app_white_buttons_bg_color"
+        android:theme="@style/MyButton" />
 </LinearLayout>

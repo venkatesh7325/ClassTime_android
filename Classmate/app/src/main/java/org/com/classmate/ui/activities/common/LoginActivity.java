@@ -146,13 +146,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "Login Activity--" + response);
                 Gson gson = new Gson();
                 LoginResponsePojo successResponsePojo = gson.fromJson(response, LoginResponsePojo.class);
-                if (successResponsePojo.getMessage().equalsIgnoreCase("success")) {
-                    ToastUtils.displayToast(successResponsePojo.getMessage(), LoginActivity.this);
-                    Utility.saveUserID(LoginActivity.this, successResponsePojo.getId()); // saving user ID into pref
+                if (successResponsePojo.getStatus() == 1) {
+                    Utility.saveLoginID(LoginActivity.this, successResponsePojo.getId()); // saving user ID into pref
                     moveToDashboard(selectionMode);
-
                 } else {
-                    ToastUtils.displayToast(successResponsePojo.getMessage(), LoginActivity.this);
+                    ToastUtils.displayToast("Enter credentials are wrong, Please try again.", LoginActivity.this);
                 }
 
             }

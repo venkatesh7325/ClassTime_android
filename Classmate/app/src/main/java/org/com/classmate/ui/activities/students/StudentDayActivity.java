@@ -8,7 +8,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import org.com.classmate.R;
+import org.com.classmate.ui.activities.teacher.LessonActivity;
+import org.com.classmate.ui.activities.teacher.TeachersDashboardActivity;
+import org.com.classmate.utils.Constants;
 import org.com.classmate.utils.ToastUtils;
+import org.com.classmate.utils.Utility;
 
 public class StudentDayActivity extends AppCompatActivity implements View.OnClickListener {
     LinearLayout llClasses;
@@ -34,7 +38,12 @@ public class StudentDayActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_classes:
-                startActivity(new Intent(this, StudentClassesActivity.class));
+                if (!Utility.isConnectingToInternet(this)) {
+                    ToastUtils.displayToast(Constants.no_internet_connection, this);
+                    return;
+                }
+                //startActivity(new Intent(this, LessonActivity.class));
+                  startActivity(new Intent(this, StudentClassesActivity.class));
                 break;
             case R.id.ll_assignments:
                 startActivity(new Intent(this, StudentClassesActivity.class));

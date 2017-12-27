@@ -7,25 +7,26 @@
             android:icon="@drawable/book"
             android:title="Classes" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_attendance"
             android:icon="@drawable/list"
             android:title="Attendance" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_score"
             android:icon="@drawable/star"
             android:title="Score" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_assignments"
             android:icon="@drawable/comment"
-            android:title="Discussion" />
+            android:title="Assignments" />
         <item
-            android:id="@+id/nav_share"
+            android:id="@+id/nav_event"
             android:icon="@drawable/calender"
             android:title="Events" />
         <item
-            android:id="@+id/nav_send"
+            android:id="@+id/nav_logout"
             android:icon="@drawable/configure"
-            android:title="Settings" />
+            android:title="Logout" />
+
     </group>
 
    <!-- <item android:title="Communicate">

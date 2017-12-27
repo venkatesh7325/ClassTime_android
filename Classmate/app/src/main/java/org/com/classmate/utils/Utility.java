@@ -166,6 +166,27 @@ public class Utility {
         return sharedPreferences.getInt("UserID", 0);
     }
 
+    public static void saveLoginID(Context context, int branchlist) {
+        appContext = context;
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences(Constants.CLASSTIME_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("login_id", branchlist);
+        editor.apply();
+    }
+
+    public static int getLoginID(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.CLASSTIME_PREF, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("login_id", 0);
+    }
+
+    public static void clearPref(Context context) {
+        appContext = context;
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences(Constants.CLASSTIME_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 
     public static void saveRole(Context context, String branchlist) {
         appContext = context;
@@ -297,7 +318,7 @@ public class Utility {
     }
 
     public static void showDatePickerDialog(Context context, final EditText textView, String title) {
-        final SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM d, yyyy", Locale.US);
+        final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         final Calendar newCalendar = Calendar.getInstance();
         final DatePickerDialog fromDatePickerDialog = new
                 DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {

@@ -52,7 +52,7 @@ import butterknife.ButterKnife;
 public class TeachersTimeTableActivity extends AppCompatActivity implements TimeSelected, SubjectListResponse, CreateTimeTable, ShowTimetable {
 
     /**
-     * Intializatiobn
+     * Intialization
      */
     @Bind(R.id.textWeekDate)
     TextView txtDate;
@@ -403,9 +403,7 @@ public class TeachersTimeTableActivity extends AppCompatActivity implements Time
     @Override
     public void getTheSelectedPosition(int position) {
         popupToGetStudentsList(TeachersTimeTableActivity.this, position);
-
     }
-
     @Override
     public void createTimeTable(String result) {
         Log.v("the etails are ", "the details ..." + result);
@@ -415,13 +413,10 @@ public class TeachersTimeTableActivity extends AppCompatActivity implements Time
             String message = jsonObj.getString("message");
             if (status.equalsIgnoreCase("1"))
                 ToastUtils.displayToast(message, getApplicationContext());
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
-
     @Override
     public void showTimeTableDetails(ShowTimetableDetails result) {
         ArrayList<TimeTable> tables = new ArrayList<>();
@@ -440,7 +435,7 @@ public class TeachersTimeTableActivity extends AppCompatActivity implements Time
                 } else {
                     if (j == 0 && i >= 1) {
                         item.setEnable("text");
-                        item.setValue(String.valueOf(time) + " :00");
+                        item.setValue(String.valueOf(time)+"0");
                     } else {
                         Log.v("the time table list is", "the list of time table is" + i + "the  day" + j);
                         for (int k = 0; k < timeList.size(); k++) {
@@ -455,7 +450,7 @@ public class TeachersTimeTableActivity extends AppCompatActivity implements Time
                 }
                 tables.add(item);
             }
-            if (time == 12.3) {
+            if (time == 12.30) {
                 time = 14.00;
             } else
                 time++;
@@ -463,7 +458,6 @@ public class TeachersTimeTableActivity extends AppCompatActivity implements Time
             TimeTableAdapter adapter = new TimeTableAdapter(this, tables, TeachersTimeTableActivity.this);
             mImageGrid.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-
         }
     }
 }

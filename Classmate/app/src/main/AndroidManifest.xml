@@ -40,7 +40,6 @@
 
         <activity
             android:name=".ui.activities.admin.AdminFormActivity"
-            android:label="@string/title_activity_admin"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -94,7 +93,7 @@
         <activity
             android:name=".ui.activities.teacher.TeachersTaskAssignActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"  />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.teacher.TeacherAttendanceActivity"
             android:screenOrientation="portrait" />
@@ -107,7 +106,17 @@
             android:name=".ui.activities.students.StudentsListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.hod.TaskListActivity"
+        <activity
+            android:name=".ui.activities.hod.TaskListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.students.StudentEventsActivity"
+            android:label="@string/title_activity_events"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.common.ChooseRoleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

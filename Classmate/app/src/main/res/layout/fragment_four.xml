@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/app_ten_dp"
             android:text="@string/analyse_your_performance"
             android:textAlignment="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/app_introduction_color"
             android:textSize="@dimen/app_twenty_two_sp" />
 
         <org.com.classmate.utils.customfonts.CustomTextViewMedium

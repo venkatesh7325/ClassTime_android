@@ -158,17 +158,15 @@ public class TeachersDashboardActivity extends AppCompatActivity implements View
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            startActivity(new Intent(TeachersDashboardActivity.this, LoginActivity.class));
-            finish();
+            Constants.popupToLogOut(TeachersDashboardActivity.this);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     void callApiToGetUserDetails(final Context context) {
         final HashMap<String, String> hashMap = new HashMap<String, String>();
         try {
-            hashMap.put("id", String.valueOf(Utility.getUserID(context)));
+            hashMap.put("id", String.valueOf(Utility.getLoginID(context)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,6 +182,7 @@ public class TeachersDashboardActivity extends AppCompatActivity implements View
                         tvCode.setText(successResponsePojo.getUserDetails().getCode());
                     tvName.setText(successResponsePojo.getUserDetails().getName());
                     tvDesignation.setText("B-Tech");
+                    Utility.saveUserID(TeachersDashboardActivity.this, successResponsePojo.getUserDetails().getId()); // saving user ID into pref
                     Utility.saveInstitutionID(TeachersDashboardActivity.this, String.valueOf(successResponsePojo.getUserDetails().getInstitutionId()));
                 } else {
                     ToastUtils.displayToast(successResponsePojo.getMessage(), context);
@@ -217,8 +216,10 @@ public class TeachersDashboardActivity extends AppCompatActivity implements View
                         dialog.dismiss();
                 }
             });
+
             final Spinner spYear = (Spinner) dialog.findViewById(R.id.sp_choose_years);
             final Spinner spSem = (Spinner) dialog.findViewById(R.id.sp_choose_semi);
+
             Button btnSubmit = (Button) dialog.findViewById(R.id.btn_submit);
             btnSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -227,6 +228,7 @@ public class TeachersDashboardActivity extends AppCompatActivity implements View
                         ToastUtils.displayToast("Please select year", TeachersDashboardActivity.this);
                         return;
                     }
+
                     if (getResources().getString(R.string.Spiner_semi_prompt).equalsIgnoreCase(spSem.getSelectedItem().toString())) {
                         ToastUtils.displayToast("Please select semester", TeachersDashboardActivity.this);
                         return;

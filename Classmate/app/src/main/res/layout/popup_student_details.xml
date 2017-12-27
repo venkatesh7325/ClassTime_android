@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_ten_dp"
+        android:orientation="vertical">
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_rollnumber"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:hint="Roll Number"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_fname"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:hint="First Name"
+            android:inputType="textCapSentences"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_lname"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:hint="Last Name"
+            android:inputType="textCapSentences"
+            android:textColorHint="@color/font_color" />
+
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_email"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:hint="Email"
+            android:inputType="textCapSentences"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_mobile"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:hint="Mobile"
+            android:inputType="number"
+            android:maxLength="10"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+            style="@style/wrap_wrap"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="@dimen/app_five_dp"
+            android:text="Gender"
+            android:textColor="@color/app_black_buttons_bg_color" />
+
+        <RadioGroup
+            android:id="@+id/rg_student_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <RadioButton
+                android:id="@+id/rb_male"
+                style="@style/match_wrap"
+                android:layout_weight=".5"
+                android:checked="true"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/rb_female"
+                style="@style/match_wrap"
+                android:layout_weight=".5"
+                android:text="Female" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Spinner
+                android:id="@+id/sp_choose_years"
+                style="@style/match_wrap"
+                android:layout_weight="1"
+                android:entries="@array/years_arrays" />
+
+            <Spinner
+                android:id="@+id/sp_choose_semi"
+                style="@style/match_wrap"
+                android:layout_weight="1"
+                android:entries="@array/semi_arrays" />
+
+
+        </LinearLayout>
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_select_branch"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="Select Your Depts"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_password"
+            style="@style/match_wrap"
+            android:layout_marginBottom="10dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomEditTextMedium
+            android:id="@+id/edt_student_cnf_password"
+            style="@style/match_wrap"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/font_color" />
+
+        <org.com.classmate.utils.customfonts.CustomTextViewMedium
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/app_twenty_dp"
+            android:padding="@dimen/app_ten_dp"
+            android:text="@string/save"
+            android:textColor="@color/app_introduction_color"
+            android:textSize="@dimen/app_twenty_sp" />
+    </LinearLayout>
+
+</ScrollView>

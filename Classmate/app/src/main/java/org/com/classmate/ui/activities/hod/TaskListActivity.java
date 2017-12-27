@@ -52,8 +52,11 @@ public class TaskListActivity extends AppCompatActivity {
             callApiGetTaskList(rcvSubjectsList);
         else
             ToastUtils.displayToast(Constants.no_internet_connection, this);
-        
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (Utility.getRole(TaskListActivity.this).equalsIgnoreCase("4")) {
+            fab.setVisibility(View.GONE);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,42 +105,44 @@ public class TaskListActivity extends AppCompatActivity {
     void callApiGetTaskList(final RecyclerView rcvSubjectsList) {
         final HashMap<String, String> jsonObject = new HashMap<>();
         try {
-            //  jsonObject.put("branch_id", "10");
-            // jsonObject.put("institution_id", String.valueOf(Utility.getUserID(TaskListActivity.this)));
-            //jsonObject.put("year", Constants.getYearId(spYear.getSelectedItem().toString()));
-            //jsonObject.put("semester", Constants.getYearId(spSemister.getSelectedItem().toString()));
-            jsonObject.put("teacher_id", String.valueOf(Utility.getUserID(TaskListActivity.this)));
+            String subUrl = "";
+            if (Utility.getRole(TaskListActivity.this).equalsIgnoreCase("4")) {
+                jsonObject.put("branch_id", "10");
+                jsonObject.put("institution_id", "1");
+                jsonObject.put("year", "1");
+                jsonObject.put("semester", "1");
+                subUrl = ApiConstants.TASK_LIST_STUDENT;
+            } else {
+                jsonObject.put("teacher_id", String.valueOf(Utility.getUserID(TaskListActivity.this)));
+                subUrl = ApiConstants.TASK_LIST_STUDENT;
+            }
+            Log.d(TAG, "After hash map--" + subUrl);
+            Log.d(TAG, "Hash Map params--" + jsonObject);
+            new APIRequest(this).postStringRequest(subUrl, jsonObject, new RequestCallBack() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d(TAG, "TASK Activity--" + response);
+                    Gson gson = new Gson();
+                    TaskListModel taskListModel = gson.fromJson(response, TaskListModel.class);
+                    if (taskListModel.getStatus().equals("1")) {
+                        setAdapter(rcvSubjectsList, taskListModel.getTaskList());
 
+                    } else {
+                        tvNoTasks.setVisibility(View.VISIBLE);
+                        tvNoTasks.setText(taskListModel.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailed(String message) {
+                    ToastUtils.displayToast(Constants.something_went_wrong, TaskListActivity.this);
+                    Log.d(TAG, "TASK Error message--" + message + "--jon respons--" + jsonObject);
+
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "After hash map");
-        Log.d(TAG, "Hash Map aprams--" + jsonObject);
-        new APIRequest(this).postStringRequest(ApiConstants.TASK_LIST_TEACHER, jsonObject, new RequestCallBack() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "TASK Activity--" + response);
-                Gson gson = new Gson();
-                TaskListModel taskListModel = gson.fromJson(response, TaskListModel.class);
-                if (taskListModel.getStatus().equals("1")) {
-                    // ToastUtils.displayToast(taskListModel.getMessage(), TaskListActivity.this);
-                    setAdapter(rcvSubjectsList, taskListModel.getTaskList());
-
-                } else {
-                    //  ToastUtils.displayToast(taskListModel.getMessage(), TaskListActivity.this);
-                    tvNoTasks.setVisibility(View.VISIBLE);
-                    tvNoTasks.setText(taskListModel.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailed(String message) {
-                ToastUtils.displayToast(Constants.something_went_wrong, TaskListActivity.this);
-                Log.d(TAG, "TASK Error message--" + message + "--jon respons--" + jsonObject);
-
-            }
-        });
-
 
     }
 
